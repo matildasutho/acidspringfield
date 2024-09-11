@@ -10,7 +10,7 @@ const Nav = () => {
     <>
       <div className="logo">
         <a href="/">
-          <img src="src/assets/AS_logo-type.png"></img>
+          <img src="/AS_logo-type.png"></img>
         </a>
       </div>
       <div className="sidebar-col nav-inner">
