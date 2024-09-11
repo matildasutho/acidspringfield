@@ -1,0 +1,13 @@
+.point {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 0.2rem;
+    background-color: red;
+}
+.audio-cont {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    z-index: -20;
+    background-color: red;
+}

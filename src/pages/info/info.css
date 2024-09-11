@@ -1,0 +1,15 @@
+.info-summary {
+  width: 60%;
+  margin-left: 40%;
+  text-align: right;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  font-weight: 400;
+  padding: 6rem 0;
+}
+.all-caps {
+  text-transform: uppercase;
+}
+.p5 {
+  width: 48%;
+}

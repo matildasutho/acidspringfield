@@ -1,0 +1,11 @@
+.copy-right {
+  text-align: right;
+  position: fixed;
+  bottom: var(--global-padding);
+  right: var(--global-padding);
+  font-size: 0.5rem;
+  line-height: 0.7rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  mix-blend-mode: multiply;
+}

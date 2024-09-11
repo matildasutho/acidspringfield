@@ -1,0 +1,81 @@
+.project-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+.hero-image {
+  width: 100%;
+  height: 50vh;
+}
+.hero-image img {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.media-image {
+  width: 100%;
+  height: fit-content;
+
+}
+.media-image img {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.project-summary {
+  text-align: right;
+  width: 85%;
+  margin-left: 15%;
+}
+.p1 {
+  width: 50%;
+  margin-left: 6rem;
+}
+.imgBlock1 {
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: var(--global-padding);
+  margin-left: auto;
+}
+
+.p2 {
+  width: 40%;
+  margin-left: 6rem;
+}
+.p4 {
+  width: 40%;
+  margin-right: 6rem;
+}
+.img-txt-block {
+  display: flex;
+  flex-direction: row;
+  gap: var(--global-padding);
+
+}
+
+.p3 {
+  width: 40%;
+  margin-left: auto;
+}
+.imgBlock2 {
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: var(--global-padding);
+  margin-left: auto;
+}
+.fruit-wrap {
+  height: 400vh;
+}
+.fruit-wrap > p {
+  mix-blend-mode: multiply;
+  color: inherit;
+}

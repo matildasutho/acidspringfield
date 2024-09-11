@@ -1,0 +1,24 @@
+.nav-inner {
+  width: calc(100vw / 12 * 2);
+  border-right: 1px solid var(--overlay);
+  padding: var(--global-padding);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+}
+.nav-inner > * {
+  height: 40%;
+  width: 100%;
+}
+.active-link {
+  color: var(--active);
+}
+.logo {
+  position: fixed;
+  width: 12rem;
+  z-index: 10;
+  top: var(--global-padding);
+  left: var(--global-padding);
+}

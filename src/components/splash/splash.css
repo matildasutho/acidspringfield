@@ -1,0 +1,61 @@
+.full-page {
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--overlay);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: var(--global-padding);
+}
+.hidden {
+  display: none;
+}
+.enter-btn {
+  background-image: url("./sound-on.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  min-height: 600px;
+  height: 100%;
+  width: calc(100vw - var(--global-padding * 2));
+  font-size: 3rem;
+  color: white;
+  /* background-color: yellow; */
+  cursor: pointer;
+  transform: skew(0deg, 0deg);
+  transition: background-size .25s ease-out;
+  animation: float 5s infinite ease-in-out;
+}
+.enter-btn:hover {
+  /* transform: skew(5deg, 0deg); */
+  background-size: 100% 42%;
+  animation: none;
+}
+.intro-txt {
+  color: white;
+  text-align: center;
+  width: 800px;
+  font-size: 1.8rem;
+  height: fit-content;
+  display: flex;
+  align-items: end;
+  
+}
+@keyframes float {
+  0% {
+    transform: skew(0, 0) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: skew(0.5deg, -0.5deg) translate3d(0, -5px, 0);
+  }
+  100% {
+    transform: skew(0,0) translate3d(0, 0, 0);
+  }
+}
