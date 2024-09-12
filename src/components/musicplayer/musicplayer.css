@@ -15,7 +15,7 @@
 .audio-trig {
     width: 400px;
     height: 120px;
-    cursor: pointer;
+
     text-align: center;
     position: absolute;
     z-index: 50;
@@ -43,14 +43,12 @@
     background-color: var(--overlay);
 }
 
-/* @keyframes float {
-    0% {
-      transform: translate(0, 0);
-    }
-    50% {
-      transform: translate(10px, -10px);
-    }
-    100% {
-      transform: translate(0, 0);
-    }
-  } */
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
