@@ -18,13 +18,13 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--overlay", "#9D989A"); // Example color
     document.documentElement.style.setProperty("--background", "#FFF5E1"); // Example color
     document.documentElement.style.setProperty("--active", "#9D989A"); // Example color
-    document.documentElement.style.setProperty("--BG-color", "rgba(255, 255, 255, 0.0)");
+    document.documentElement.style.setProperty("--opacity", "1");
   } else {
     document.documentElement.style.setProperty("--overlay", "#007be5");
     document.documentElement.style.setProperty("--background", "#DDE2D6");
     document.documentElement.style.setProperty("--active", "#000000");
-    document.documentElement.style.setProperty("--hover", "#007be5");
-    document.documentElement.style.setProperty("--BG-color", "rgba(255, 255, 255, 0.8)");
+    document.documentElement.style.setProperty("--hover", "#007be55E");
+    document.documentElement.style.setProperty("--opacity", "0.1");
   }
 }
 

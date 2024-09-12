@@ -15,9 +15,12 @@
 .active-link {
   color: var(--active);
 }
+.active-link:hover {
+  color: var(--active);
+}
 .logo {
   position: fixed;
-  width: 12rem;
+
   z-index: 10;
   top: var(--global-padding);
   left: var(--global-padding);

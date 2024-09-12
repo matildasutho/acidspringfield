@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchData } from "../../API/contentful/fetchContentful";
-import {documentToReactComponents} from "@contentful/rich-text-react-renderer";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "../../components/Image/Image";
 
 import "./projectSubPage.css";
 
 const colorPairs = [
-  { background: "#EFF3E8", foreground: "#007BE5" },
-  { background: "#7A7064", foreground: "#201E1E" },
-  { background: "#D0F85F", foreground: "#6E6B6C" },
+  { background: "#EFF3E8", foreground: "#EFF3E8" },
+  { background: "#FFB6C7", foreground: "#7A7064" },
+  { background: "#D0F85F", foreground: "#D0F85F" },
 ];
 
 // Function to generate slug from project title
@@ -35,13 +35,16 @@ function ProjectSubPage() {
   const [projects, setProjects] = useState([]);
   const { slug } = useParams();
   const [bodyTextColor, setBodyTextColor] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState(
-    colorPairs[0].background
-  );
-  const [foregroundColor, setForegroundColor] = useState(
-    colorPairs[0].foreground
-  );
+  const [backgroundColor, setBackgroundColor] = useState("");
+  const [foregroundColor, setForegroundColor] = useState("");
   const fruitWrapRef = useRef(null);
+
+  useEffect(() => {
+    const randomColorPair =
+      colorPairs[Math.floor(Math.random() * colorPairs.length)];
+    setBackgroundColor(randomColorPair.background);
+    setForegroundColor(randomColorPair.foreground);
+  }, []);
 
   useEffect(() => {
     const handleScroll = (entries) => {
@@ -54,8 +57,6 @@ function ProjectSubPage() {
           setBodyTextColor("");
         }
       });
-      setBackgroundColor(randomColorPair.background);
-      setForegroundColor(randomColorPair.foreground);
     };
 
     const observer = new IntersectionObserver(handleScroll, {
@@ -144,7 +145,8 @@ function ProjectSubPage() {
             <img src={project.heroImage.url} alt={project.heroImage.title} />
           </div>
           <span className="tiny-txt">
-            <span>PROJECT</span> <span className="caption-font">{project.projectTitle}</span>
+            <span>PROJECT</span>{" "}
+            <span className="caption-font">{project.projectTitle}</span>
           </span>
           <div className="project-wrap">
             <span className="project-summary">
@@ -158,16 +160,15 @@ function ProjectSubPage() {
             <div className="imgBlock1">
               {project.imageBlock1Collection &&
                 project.imageBlock1Collection.items.map((image, imgIndex) => (
-                  // <img key={imgIndex} src={image.url} alt={image.title} />
                   <Image
-                  key={imgIndex}
-              setImage={image.url} 
-              zoomedImage={image.url}
-      
-              imageTitle={image.title}
-            />
+                    key={imgIndex}
+                    setImage={image.url}
+                    zoomedImage={image.url}
+                    imageTitle={image.title}
+                  />
                 ))}
             </div>
+            <br />
           </div>
         </div>
 
@@ -189,35 +190,29 @@ function ProjectSubPage() {
           )}
           <br />
           {paragraph3HTML && (
-          <span className="img-txt-block">
-            <div className="imgBlock2">
-              {project.imageBlock2Collection &&
-                project.imageBlock2Collection.items.map((image, imgIndex) => (
-                  // <img key={imgIndex} src={image.url} alt={image.title} />
-                  <Image
-                  key={imgIndex}
-              setImage={image.url}
-              imageTitle={image.title}
-            />
-                ))}
-            </div>
-            
+            <span className="img-txt-block">
+              <div className="imgBlock2">
+                {project.imageBlock2Collection &&
+                  project.imageBlock2Collection.items.map((image, imgIndex) => (
+                    <Image
+                      key={imgIndex}
+                      setImage={image.url}
+                      imageTitle={image.title}
+                    />
+                  ))}
+              </div>
               <span
                 className="smll-txt p3"
                 dangerouslySetInnerHTML={{ __html: paragraph3HTML }}
               />
-       
-          </span>
-               )}
+            </span>
+          )}
           <br />
-          
-            {project.media1 && (
-              <div className="hero-image">
+          {project.media1 && (
+            <div className="hero-image">
               <img src={project.media1.url} alt={project.media1.title} />
-            
-              </div>
-            )}
-        
+            </div>
+          )}
           <br />
           {paragraph4HTML && (
             <div

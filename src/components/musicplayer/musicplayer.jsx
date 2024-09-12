@@ -42,7 +42,7 @@ const MusicPlayer = () => {
     const selectedSamples = [];
 
     const gridPositions = [];
-    for (let row = 2; row <= 12; row++) {
+    for (let row = 2; row <= 10; row++) {
       for (let col = 1; col <= 9; col++) {
         gridPositions.push({ gridColumn: col, gridRow: row });
       }

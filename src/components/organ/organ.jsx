@@ -87,14 +87,14 @@ function Organ() {
        vec3 brown = vec3(0.23,0.16,0.12);
        vec3 lightGrey = vec3(0.96,0.96,0.96);
        vec3 darkGrey = vec3(0.05,0.05,0.05);
-       vec3 black = vec3(0.01,0.01,0.1);
+       vec3 black = vec3(0.0,0.0,0.);
 
        float n = noise(vPosition + time);
        vec2 baseUV = rotate2D(n) * vUv * 10.0; // Adjusted scaling factor
        float basePattern = lines(baseUV, 0.2);
        float secondPattern = lines(baseUV, 0.3);
 
-       vec3 baseColor = mix(black, darkGrey, basePattern);
+       vec3 baseColor = mix(black, black, basePattern);
        vec3 secondBaseColor = mix(baseColor, lightGrey, secondPattern);
 
        gl_FragColor = vec4(secondBaseColor, 1.0);

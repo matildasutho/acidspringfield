@@ -14,8 +14,8 @@
   --hover: #007be5;
   --caption: #C4C4C4;
   --line-weight: 1px;
-  --global-padding: 0.5rem;
-  --BG-color: rgba(0, 0, 0, 0.0);
+  --global-padding: 0.75rem;
+  --opacity: 1;
 }
 ::-webkit-scrollbar {
   display: none;
