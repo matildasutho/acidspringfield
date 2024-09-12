@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--overlay);
+  background-color: #007be5;
   position: absolute;
   top: 0;
   left: 0;
@@ -17,7 +17,7 @@
   display: none;
 }
 .enter-btn {
-  background-image: url("./sound-on.png");
+  background-image: url("./sound-on_splash.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -30,12 +30,12 @@
   /* background-color: yellow; */
   cursor: pointer;
   transform: skew(0deg, 0deg);
-  transition: background-size .25s ease-out;
+  transition: filter .25s ease-out;
   animation: float 5s infinite ease-in-out;
 }
 .enter-btn:hover {
   /* transform: skew(5deg, 0deg); */
-  background-size: 100% 42%;
+  filter: blur(4px);
   animation: none;
 }
 .intro-txt {

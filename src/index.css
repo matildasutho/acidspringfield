@@ -8,9 +8,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --overlay: #007be5;
-  --background: #dde2d6;
-  --active: #000000;
+  --overlay: #9D989A;
+  --background: #FFF5E1;
+  --active: #9D989A;
   --hover: #007be5;
   --caption: #C4C4C4;
   --line-weight: 1px;

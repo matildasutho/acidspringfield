@@ -9,6 +9,7 @@ import Projects from "./pages/projects/projects";
 import ProjectSubPage from "./pages/projectSubPage/projectSubPage";
 import Footer from "./components/footer/footer";
 import Organ from "./components/organ/organ";
+import Splash from "./components/splash/splash";
 import { AudioProvider } from "./components/audiocontext/AudioContext";
 import ToggleButton from "./components/togglebutton/togglebutton";
 import "./App.css";
@@ -30,6 +31,25 @@ function updateCSSVariables() {
 
 function App() {
   const location = useLocation();
+  const [showSplash, setShowSplash] = useState(() => {
+    return sessionStorage.getItem("splashShown") !== "true";
+  });
+
+  useEffect(() => {
+    if (
+      location.pathname === "/" &&
+      sessionStorage.getItem("splashShown") !== "true"
+    ) {
+      setShowSplash(true);
+    } else {
+      setShowSplash(false);
+    }
+  }, [location]);
+
+  const handleHideSplash = () => {
+    setShowSplash(false);
+    sessionStorage.setItem("splashShown", "true");
+  };
 
   useEffect(() => {
     updateCSSVariables();
@@ -41,29 +61,27 @@ function App() {
 
   return (
     <div>
-      <div id="main-container">
+      {showSplash && <Splash onHide={handleHideSplash} />}
+      {/* {!showSplash && ( */}
+      <div id="main-container" className={showSplash ? "home-page" : ""}>
         <Nav />
         <TransitionGroup>
           <Organ />
-            <CSSTransition
-              key={location.key}
-              timeout={1000}
-              classNames="fade"
-            >
-        <div id="content-container">
-        
+          <CSSTransition key={location.key} timeout={1000} classNames="fade">
+            <div id="content-container">
               <Routes location={location}>
                 <Route path="/" element={<Home />} />
                 <Route path="/info" element={<Info />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:slug" element={<ProjectSubPage />} />
               </Routes>
-     
-          <Footer />
-        </div>
-        </CSSTransition>
+
+              <Footer />
+            </div>
+          </CSSTransition>
         </TransitionGroup>
       </div>
+      {/* )} */}
     </div>
   );
 }
