@@ -6,7 +6,8 @@
   position: fixed;
   top: 0;
   left: 0;
-
+  font-size: 1.5rem;
+  line-height: 1.5rem;
 }
 .nav-inner > * {
   height: 40%;
@@ -19,8 +20,8 @@
   color: var(--active);
 }
 .logo {
+  width: 150px;
   position: fixed;
-
   z-index: 10;
   top: var(--global-padding);
   left: var(--global-padding);

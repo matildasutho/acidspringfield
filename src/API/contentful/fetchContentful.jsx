@@ -63,7 +63,10 @@ infoCollection {
     items {
       infoSummary
       paragraph1
-      image1 {
+      rightColumn {
+        json
+      }
+        heroImage {
         title
         description
         contentType
@@ -73,7 +76,26 @@ infoCollection {
         width
         height
       }
-      sideBar
+      benImage {
+        title
+        description
+        contentType
+        fileName
+        size
+        url
+        width
+        height
+      }
+        ericaImage {
+        title
+        description
+        contentType
+        fileName
+        size
+        url
+        width
+        height
+      }
     }
 }
 }`;

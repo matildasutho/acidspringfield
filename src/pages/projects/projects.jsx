@@ -24,7 +24,7 @@ const Projects = () => {
 
   return (
     <>
-      <div className="flex-col projects-content">
+      <div className="flex-col projects-content fade-in">
         {projects.map((project, index) => (
           <Link
             key={index}

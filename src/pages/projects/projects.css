@@ -9,7 +9,7 @@
   white-space: nowrap; /* Prevents text from wrapping to the next line */
   overflow: hidden; /* Hides any text that overflows the container */
   text-overflow: ellipsis; /* Adds an ellipsis (...) at the end of the truncated text */
-  width: 85%;
+  width: 93%;
 }
 .projects-content {
   box-sizing: border-box;

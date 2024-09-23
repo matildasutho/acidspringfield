@@ -7,5 +7,5 @@
   line-height: 0.7rem;
   font-weight: 200;
   text-transform: uppercase;
-  mix-blend-mode: multiply;
+  color: var(--overlay);
 }

@@ -4,7 +4,7 @@ import "./rightColumn.css";
 const RightColumn = ({ text }) => {
   return (
     <div className="sidebar-col col-inner">
-      <div className="">{text}</div>
+      <div className="smll-txt">{text}</div>
     </div>
   );
 };

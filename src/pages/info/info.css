@@ -1,15 +1,71 @@
 .info-summary {
   width: 60%;
-  margin-left: 40%;
+  margin-left: auto;
   text-align: right;
   font-size: 1.8rem;
   line-height: 2rem;
   font-weight: 400;
-  padding: 6rem 0;
+
 }
 .all-caps {
   text-transform: uppercase;
 }
 .p5 {
-  width: 48%;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  width: 70%;
+
+}
+.info-hero {
+  mix-blend-mode: lighten;
+  width: calc(100vw / 12 * 3);
+  opacity: 0.8;
+  mix-blend-mode: lighten;
+}
+.info-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: baseline;
+
+  padding-bottom: 8rem;
+}
+.info-header > * {
+  margin-top: auto;
+}
+.hover-target {
+  position: relative;
+  cursor: pointer;
+  font-style: bold;
+  background-color: var(--overlay);
+  color: var(--background);
+}
+
+/* .hover-target .hover-image {
+  display: none;
+  position: absolute;
+  top: 0vh;
+  left: 0vw;
+  z-index: 100;
+} */
+
+.hover-target:hover .hover-image {
+  display: block;
+
+}
+.hover-target:hover {
+  background-color: var(--active);
+  transition: background-color 0.3s;
+}
+
+.fade-in-img {
+  animation: fade-in-img 0.12s;
+}
+@keyframes fade-in-img {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

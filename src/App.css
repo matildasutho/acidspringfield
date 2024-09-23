@@ -12,7 +12,6 @@
   padding-bottom: var(--global-padding);
   padding-left: calc((100vw / 12 * 2) + var(--global-padding));
   padding-right: calc((100vw / 12 * 2) + var(--global-padding));
-
   box-sizing: border-box;
   width: 100%;
   /* width: calc(100vw - 100vw / 12 * 2); */

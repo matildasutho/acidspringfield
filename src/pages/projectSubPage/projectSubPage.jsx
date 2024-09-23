@@ -113,29 +113,11 @@ function ProjectSubPage() {
   const paragraph4HTML = project.paragraph4
     ? convertToHTML(project.paragraph4)
     : null;
-  const sideBarHTML = project.sideBar ? convertToHTML(project.sideBar) : null;
-  const ourRoleHTML = project.ourRole ? convertToHTML(project.ourRole) : null;
 
-  const sideBarP = sideBarHTML && (
-    <div
-      className="smll-txt"
-      dangerouslySetInnerHTML={{ __html: sideBarHTML }}
-    />
-  );
-  const ourRoleP = ourRoleHTML && (
-    <div
-      className="smll-txt"
-      dangerouslySetInnerHTML={{ __html: ourRoleHTML }}
-    />
-  );
-
-  // Emphasize the project title in the project summary
   const emphasizedSummary = emphasizeProjectTitle(
     project.projectSummary,
     project.projectTitle
   );
-
-  console.log(project.rightColumn.json.content);
 
   return (
     <div className="flex-row">
@@ -209,7 +191,7 @@ function ProjectSubPage() {
           )}
           <br />
           {project.media1 && (
-            <div className="hero-image">
+            <div className="media-image">
               <img src={project.media1.url} alt={project.media1.title} />
             </div>
           )}

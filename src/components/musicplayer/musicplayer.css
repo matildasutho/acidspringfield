@@ -5,20 +5,17 @@
     left: 0;
     top: 0;
     z-index: 30;
-
     display: grid;
     grid-template-columns: repeat(12, 1fr); /* Adjust the number of columns as needed */
     grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */
     gap: 10px; /* Adjust the gap between grid items as needed */
-    
 }
 .audio-trig {
     width: 400px;
     height: 120px;
-
     text-align: center;
     position: absolute;
-    z-index: 50;
+    z-index: 100;
     left: calc(50vw - 200px);
     top: calc(50vh - 120px);
     display: flex;

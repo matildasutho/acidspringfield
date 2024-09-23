@@ -17,15 +17,22 @@ import "./App.css";
 function updateCSSVariables() {
   if (document.body.classList.contains("home-page")) {
     document.documentElement.style.setProperty("--overlay", "#9D989A"); // Example color
-    document.documentElement.style.setProperty("--background", "#FFF5E1"); // Example color
+    document.documentElement.style.setProperty("--background", "#FFF5E1E5"); // Example color
     document.documentElement.style.setProperty("--active", "#9D989A"); // Example color
     document.documentElement.style.setProperty("--opacity", "1");
+  }
+  else if (document.body.classList.contains("info-page")) {
+    document.documentElement.style.setProperty("--overlay", "#FFF5E1"); // Example color
+    document.documentElement.style.setProperty("--background", "#007be5"); // Example color
+    document.documentElement.style.setProperty("--active", "#000000"); // Example color
+    document.documentElement.style.setProperty("--hover", "#BDFF00");
+    document.documentElement.style.setProperty("--opacity", "0.08");
   } else {
     document.documentElement.style.setProperty("--overlay", "#007be5");
-    document.documentElement.style.setProperty("--background", "#DDE2D6");
+    document.documentElement.style.setProperty("--background", "#FFFFFF");
     document.documentElement.style.setProperty("--active", "#000000");
     document.documentElement.style.setProperty("--hover", "#007be55E");
-    document.documentElement.style.setProperty("--opacity", "0.1");
+    document.documentElement.style.setProperty("--opacity", "0.13");
   }
 }
 
