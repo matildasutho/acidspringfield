@@ -11,7 +11,7 @@ const Goobath = [
   "/samples/Goobath/waterlogged_dub.wav",
 ];
 
-const MusicPlayer = () => {
+const MusicPlayer = ({ onAudioReady }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showTrigger, setShowTrigger] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -19,6 +19,18 @@ const MusicPlayer = () => {
   const audiotrigger = useRef(null);
   const audioRefs = useRef([]);
   const animationStyleSheet = useRef(null);
+  const audioContextRef = useRef(null);
+
+  useEffect(() => {
+    audioContextRef.current = new (window.AudioContext ||
+      window.webkitAudioContext)();
+    const audioObject = new Audio();
+    const audioSource =
+      audioContextRef.current.createMediaElementSource(audioObject);
+    audioSource.connect(audioContextRef.current.destination);
+
+    onAudioReady(audioObject, audioContextRef.current);
+  }, [onAudioReady]);
 
   const handleTogglePlayPause = (index) => {
     if (audioRefs.current[index].paused) {
@@ -137,16 +149,25 @@ const MusicPlayer = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleUserGesture = () => {
+    if (audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume().then(() => {
+        console.log("AudioContext resumed");
+      });
+    }
+  };
+
   return (
     <>
       {showTrigger && (
         <div
           ref={audiotrigger}
           className={`audio-trig emph-txt fade-in ${fadeOut ? "fade-out" : ""}`}
+          onClick={handleUserGesture}
         >
           <h3>
-            Move mouse over Acid Springfield samples and field recordings to
-            build your own mix.
+            Click to build your own mix of Acid Springfield samples and field
+            recordings.
           </h3>
         </div>
       )}
@@ -161,6 +182,7 @@ const MusicPlayer = () => {
             }}
             onClick={() => {
               handleTogglePlayPause(index);
+              handleUserGesture();
             }}
           >
             <span className="point-symbol"></span>

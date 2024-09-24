@@ -1,26 +1,165 @@
 import React from "react";
 
-const query = `{
-  projectCollection {
-    items {
-      projectTitle
+const query = `
+  query {
+    projectCollection {
+      items {
+        sys {
+          id
+          publishedVersion
+          publishedAt
+          firstPublishedAt
+        }
+        projectTitle
+        heroImage {
+          url
+          title
+          description
+          contentType
+          fileName
+          size
+          width
+          height
+        }
+        projectSummary
+        rightColumn {
+          json
+        }
+        paragraph1
+        imageBlock1Collection(limit: 2) {
+          items {
+            url
+            title
+            description
+            contentType
+            fileName
+            size
+            width
+            height
+          }
+        }
+        paragraph2
+        imageBlock2Collection(limit: 2) {
+          items {
+            url
+            title
+            description
+            contentType
+            fileName
+            size
+            width
+            height
+          }
+        }
+        paragraph3
+        media1 {
+          url
+          title
+          description
+          contentType
+          fileName
+          size
+          width
+          height
+        }
+        paragraph4
+        mediaBlockCollection(limit: 5) {
+          items {
+            sys {
+              id
+            }
+            ... on ComponentHomePageLinks {
+              internalTitle
+              linksList {
+                json
+              }
+            }
+            ... on ComponentImageBlockDouble {
+              internalTitle
+              imageBlockCollection(limit: 2) {
+                items {
+                  title
+                  description
+                  contentType
+                  fileName
+                  size
+                  url
+                  width
+                  height
+                }
+              }
+              layout
+            }
+            ... on ComponentImageBlockSingle {
+              internalTitle
+              image {
+                url
+                title
+                description
+                contentType
+                fileName
+                size
+                width
+                height
+              }
+              layout
+            }
+            ... on ComponentText {
+              textContent {
+                json
+              }
+              layout
+            }
+            ... on ComponentVideoTextBlock {
+              internalTitle
+              video {
+                url
+                title
+                description
+                contentType
+                fileName
+                size
+                width
+                height
+              }
+              videoText {
+                json
+              }
+              textPosition
+            }
+          }
+        }
+      }
+    }
+infoCollection {
+      items {
+        infoSummary
+        paragraph1
+          rightColumn {
+          json
+      }
       heroImage {
         title
-        description
-        contentType
-        fileName
-        size
-        url
-        width
-        height
-      }
-      projectSummary
-            rightColumn {
-      json
-      }
-      paragraph1
-      imageBlock1Collection {    
-        items {
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        benImage {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        ericaImage
+        {
           title
           description
           contentType
@@ -31,74 +170,9 @@ const query = `{
           height
         }
       }
-      paragraph2
-      imageBlock2Collection {  
-        items {
-          title
-          description
-          contentType
-          fileName
-          size
-          url
-          width
-          height
-        }
-      }
-      paragraph3
-      media1 {
-        title
-        description
-        contentType
-        fileName
-        size
-        url
-        width
-        height
-      }
-      paragraph4
-
     }
   }
-infoCollection {
-    items {
-      infoSummary
-      paragraph1
-      rightColumn {
-        json
-      }
-        heroImage {
-        title
-        description
-        contentType
-        fileName
-        size
-        url
-        width
-        height
-      }
-      benImage {
-        title
-        description
-        contentType
-        fileName
-        size
-        url
-        width
-        height
-      }
-        ericaImage {
-        title
-        description
-        contentType
-        fileName
-        size
-        url
-        width
-        height
-      }
-    }
-}
-}`;
+`;
 
 export async function fetchData() {
   const response = await fetch(

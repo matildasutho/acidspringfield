@@ -31,11 +31,10 @@ const Image = ({ setImage, imageTitle, zoomedImage, mobileImage }) => {
   return (
     <div className={"image-cont"}>
       <img
-        src={imageSrc}
+        src={`${imageSrc}?fit=fill`}
         className={"image-style"}
         alt={imageTitle}
         onClick={toggleZoom}
-    
       />
 
       {isZoomed && (
@@ -45,7 +44,6 @@ const Image = ({ setImage, imageTitle, zoomedImage, mobileImage }) => {
             className={"zoomed-style"}
             alt={imageTitle}
             onClick={toggleZoom}
-    
           />
         </div>
       )}

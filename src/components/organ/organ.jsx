@@ -1,11 +1,11 @@
-import * as THREE from 'three';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { DotScreenShader } from './customshader.js';
-import React, { useEffect, useRef } from 'react';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import './organ.css';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { DotScreenShader } from "./customshader.js";
+import "./organ.css";
 
 function Organ() {
   const refContainer = useRef(null);
@@ -15,8 +15,8 @@ function Organ() {
     let renderer, scene, camera, controls, material;
 
     function init() {
-     // Vertex shader code
-     const vertexShader = `
+      // Vertex shader code
+      const vertexShader = `
      uniform float time;
      varying vec2 vUv;
      varying vec3 vPosition;
@@ -29,8 +29,8 @@ function Organ() {
      }
    `;
 
-   // Fragment shader code
-   const fragmentShader = `
+      // Fragment shader code
+      const fragmentShader = `
      uniform float time;
      uniform float progress;
      uniform sampler2D texture1;
@@ -68,12 +68,12 @@ function Organ() {
 
      float lines(vec2 uv, float offset) {
          // Add noise to the UV coordinates to make the lines wiggly
-         float noiseValue = noise(vec3(uv * 10.0, offset));
+         float noiseValue = noise(vec3(uv * 5.0, offset));
          uv.y += noiseValue * 0.1; // Adjust the scale of the noise perturbation
 
          return smoothstep(
              0.0, 0.5 + offset * 0.5,
-             0.5 * abs((sin(uv.x * 1.0) + offset * 2.0))
+             0.5 * abs((sin(uv.x * 0.5) + offset * 2.0))
          );
      }
 
@@ -94,43 +94,48 @@ function Organ() {
        float basePattern = lines(baseUV, 0.2);
        float secondPattern = lines(baseUV, 0.3);
 
-       vec3 baseColor = mix(black, black, basePattern);
-       vec3 secondBaseColor = mix(baseColor, lightGrey, secondPattern);
+       vec3 baseColor = mix(lightGrey, lightGrey, basePattern);
+       vec3 secondBaseColor = mix(baseColor, black, secondPattern);
 
        gl_FragColor = vec4(secondBaseColor, 1.0);
      }
    `;
 
-   scene = new THREE.Scene();
-   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-   renderer = new THREE.WebGLRenderer();
-   renderer.setSize(window.innerWidth, window.innerHeight);
-   refContainer.current && refContainer.current.appendChild(renderer.domElement);
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      refContainer.current &&
+        refContainer.current.appendChild(renderer.domElement);
 
-   controls = new OrbitControls(camera, renderer.domElement);
-   controls.enableDamping = true;
-   controls.dampingFactor = 0.25;
-   controls.screenSpacePanning = false;
-   controls.minDistance = 1;
-   controls.maxDistance = 500;
-   controls.maxPolarAngle = Math.PI / 2;
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.25;
+      controls.screenSpacePanning = false;
+      controls.minDistance = 1;
+      controls.maxDistance = 500;
+      controls.maxPolarAngle = Math.PI / 2;
 
-   var geometry = new THREE.SphereGeometry(5, 64, 64);
-   geometry.rotateX(165);
-   geometry.rotateY(240);
-   material = new THREE.ShaderMaterial({
-     vertexShader: vertexShader,
-     fragmentShader: fragmentShader,
-     uniforms: {
-       time: { value: 0.001 },
-     },
-     side: THREE.DoubleSide,
-   });
-   var sphere = new THREE.Mesh(geometry, material);
+      var geometry = new THREE.SphereGeometry(5, 64, 64);
+      geometry.rotateX(165);
+      geometry.rotateY(240);
+      material = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+        uniforms: {
+          time: { value: 0.001 },
+        },
+        side: THREE.DoubleSide,
+      });
+      var sphere = new THREE.Mesh(geometry, material);
 
-
-   scene.add(sphere);
-   camera.position.z = 0;
+      scene.add(sphere);
+      camera.position.z = 0;
 
       function animate() {
         requestAnimationFrame(animate);
@@ -160,20 +165,18 @@ function Organ() {
       composer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener("resize", onWindowResize, false);
     init();
 
     return () => {
-      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener("resize", onWindowResize);
       if (refContainer.current) {
         refContainer.current.removeChild(renderer.domElement);
       }
     };
   }, []);
 
-  return (
-    <div className="threejs-canvas" ref={refContainer}></div>
-  );
+  return <div className="threejs-canvas" ref={refContainer}></div>;
 }
 
 export default Organ;

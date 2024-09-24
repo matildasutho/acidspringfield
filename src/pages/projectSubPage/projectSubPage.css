@@ -27,8 +27,8 @@
 }
 .project-summary {
   text-align: right;
-  width: 85%;
-  margin-left: 15%;
+  width: calc(100vw / 12 * 6);
+  margin-left: auto;
 }
 .p1 {
   font-size: 1.5rem;
@@ -78,7 +78,4 @@
 .fruit-wrap {
   height: 400vh;
 }
-.fruit-wrap > p {
-  mix-blend-mode: multiply;
-  color: inherit;
-}
+

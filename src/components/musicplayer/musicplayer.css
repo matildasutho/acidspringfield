@@ -15,7 +15,7 @@
     height: 120px;
     text-align: center;
     position: absolute;
-    z-index: 100;
+    z-index: 50;
     left: calc(50vw - 200px);
     top: calc(50vh - 120px);
     display: flex;

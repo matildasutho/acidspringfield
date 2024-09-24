@@ -13,6 +13,37 @@
   height: 40%;
   width: 100%;
 }
+.nav-inner .hover-content {
+  display: none;
+  position: absolute;
+}
+.nav-inner .nav-item {
+  position: relative;
+
+}
+.nav-inner a:hover + .hover-content,
+.nav-inner .hover-content:hover {
+  display: block;
+  margin-left: var(--global-padding);
+}
+
+.nav-inner ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-inner ul li {
+  margin: 5px 0;
+}
+
+.nav-inner ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-inner ul li a:hover {
+  text-decoration: underline;
+}
 .active-link {
   color: var(--active);
 }
@@ -25,4 +56,7 @@
   z-index: 10;
   top: var(--global-padding);
   left: var(--global-padding);
+}
+.hidden {
+  display: none;
 }

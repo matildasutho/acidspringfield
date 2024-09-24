@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 200;
   padding: var(--global-padding);
 }
 .hidden {
@@ -43,6 +43,7 @@
   text-align: center;
   width: 800px;
   font-size: 1.8rem;
+  line-height: 1.8rem;
   height: fit-content;
   display: flex;
   align-items: end;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchData } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "../../components/Image/Image";
+import RichTextRenderer from "../../components/hyperlink/hyperlink";
 
 import "./projectSubPage.css";
 
@@ -205,7 +206,11 @@ function ProjectSubPage() {
           <br />
         </div>
       </div>
-      <RightColumn text={documentToReactComponents(project.rightColumn.json)} />
+      {project.rightColumn && (
+        <RightColumn>
+          <RichTextRenderer document={project.rightColumn.json} />
+        </RightColumn>
+      )}
     </div>
   );
 }
