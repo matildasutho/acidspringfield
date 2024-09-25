@@ -6,8 +6,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1rem;
 }
 .nav-inner > * {
   height: 40%;
@@ -38,8 +38,8 @@
 .nav-inner ul li a {
   text-decoration: none;
   color: var(--active);
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.2rem;
 }
 
 .nav-inner ul li a:hover {
