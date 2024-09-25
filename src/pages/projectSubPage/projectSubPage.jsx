@@ -206,7 +206,7 @@ function ProjectSubPage() {
           <br />
         </div>
       </div>
-      {project.rightColumn && (
+      {project.rightColumn && project.rightColumn.json && (
         <RightColumn>
           <RichTextRenderer document={project.rightColumn.json} />
         </RightColumn>

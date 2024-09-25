@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { fetchData } from "../../API/contentful/fetchContentful";
+import RichTextRenderer from "../../components/hyperlink/hyperlink";
 import "./nav.css"; // Ensure you have the necessary CSS
 
 const Nav = () => {
   const { pathname } = useLocation();
   const [hoveredLink, setHoveredLink] = useState(null);
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+    fetchData()
+      .then((data) => {
+        setLinks(data.componentHomePageLinksCollection.items);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <>
@@ -31,18 +42,18 @@ const Nav = () => {
             className={"nav-item"}
           >
             <a>Listen</a>
-            {hoveredLink === "listen" && (
+            {hoveredLink === "listen" && links.length > 0 && (
               <div className="hover-content">
                 <ul>
-                  <li>
-                    <a href="/listen/track1">Track 1</a>
-                  </li>
-                  <li>
-                    <a href="/listen/track2">Track 2</a>
-                  </li>
-                  <li>
-                    <a href="/listen/track3">Track 3</a>
-                  </li>
+                  {links.map(
+                    (link, index) =>
+                      link.linksList &&
+                      link.linksList.json && (
+                        <li key={index}>
+                          <RichTextRenderer document={link.linksList.json} />
+                        </li>
+                      )
+                  )}
                 </ul>
               </div>
             )}

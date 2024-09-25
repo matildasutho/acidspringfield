@@ -2,6 +2,20 @@ import React from "react";
 
 const query = `
   query {
+componentHomePageLinksCollection {
+      items {
+        sys {
+          id
+          publishedVersion
+          publishedAt
+          firstPublishedAt
+        }
+        internalTitle
+        linksList {
+          json
+        }
+      }
+    }
     projectCollection {
       items {
         sys {
@@ -68,12 +82,7 @@ const query = `
             sys {
               id
             }
-            ... on ComponentHomePageLinks {
-              internalTitle
-              linksList {
-                json
-              }
-            }
+         
             ... on ComponentImageBlockDouble {
               internalTitle
               imageBlockCollection(limit: 2) {

@@ -71,7 +71,7 @@ function App() {
     return () => {
       window.removeEventListener("popstate", updateCSSVariables);
     };
-  }, []);
+  }, [showSplash]);
 
   return (
     <div>

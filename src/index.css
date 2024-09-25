@@ -78,6 +78,7 @@ p {
 }
 a {
   font-weight: 200;
+  font-size: inherit;
 }
 p a {
   text-decoration: underline;
