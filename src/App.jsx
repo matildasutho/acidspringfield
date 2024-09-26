@@ -48,63 +48,72 @@ function App() {
   });
   const [audioObject, setAudioObject] = useState(null);
   const [audioContext, setAudioContext] = useState(null);
+    const nodeRef = useRef(null);
 
-  useEffect(() => {
-    if (
-      location.pathname === "/" &&
-      sessionStorage.getItem("splashShown") !== "true"
-    ) {
-      setShowSplash(true);
-    } else {
+    useEffect(() => {
+      if (
+        location.pathname === "/" &&
+        sessionStorage.getItem("splashShown") !== "true"
+      ) {
+        setShowSplash(true);
+      } else {
+        setShowSplash(false);
+      }
+    }, [location]);
+
+    const handleHideSplash = () => {
       setShowSplash(false);
-    }
-  }, [location]);
-
-  const handleHideSplash = () => {
-    setShowSplash(false);
-    sessionStorage.setItem("splashShown", "true");
-  };
-
-  useEffect(() => {
-    updateCSSVariables();
-    window.addEventListener("popstate", updateCSSVariables);
-    return () => {
-      window.removeEventListener("popstate", updateCSSVariables);
+      sessionStorage.setItem("splashShown", "true");
     };
-  }, [showSplash]);
 
-  return (
-    <div>
-      {showSplash ? (
-        <Splash onHide={handleHideSplash} />
-      ) : (
-        <div
-          id="main-container"
-          className={location.pathname === "/" ? "home-page" : ""}
-        >
-          <Nav />
-          <TransitionGroup>
-            {/* {audioObject && audioContext && ( */}
-            <Organ audioObject={audioObject} audioContext={audioContext} />
-            {/* )} */}
-            <CSSTransition key={location.key} timeout={1000} classNames="fade">
-              <div id="content-container">
-                <Routes location={location}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/info" element={<Info />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/projects/:slug" element={<ProjectSubPage />} />
-                </Routes>
+    useEffect(() => {
+      updateCSSVariables();
+      window.addEventListener("popstate", updateCSSVariables);
+      return () => {
+        window.removeEventListener("popstate", updateCSSVariables);
+      };
+    }, [showSplash]);
 
-                <Footer />
-                <ScrollText />
-              </div>
-            </CSSTransition>
-          </TransitionGroup>
-        </div>
-      )}
-    </div>
-  );
+    return (
+      <div>
+        {showSplash ? (
+          <Splash onHide={handleHideSplash} />
+        ) : (
+          <div
+            id="main-container"
+            className={location.pathname === "/" ? "home-page" : ""}
+          >
+            <Nav />
+            <TransitionGroup>
+              {/* {audioObject && audioContext && ( */}
+              <Organ audioObject={audioObject} audioContext={audioContext} />
+              {/* )} */}
+              <CSSTransition
+                key={location.key}
+                timeout={1000}
+                classNames="fade"
+                nodeRef={nodeRef}
+              >
+                <div id="content-container" ref={nodeRef}>
+                  <Routes location={location}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/info" element={<Info />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route
+                      path="/projects/:slug"
+                      element={<ProjectSubPage />}
+                    />
+                  </Routes>
+
+                  <Footer />
+                  <ScrollText />
+                </div>
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
+        )}
+      </div>
+    );
 }
 
 function AppWrapper() {

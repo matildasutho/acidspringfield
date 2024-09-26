@@ -90,7 +90,7 @@ a {
 }
 a:hover {
   color: var(--active);
-  text-decoration: none;
+  /* text-decoration: none; */
   cursor: pointer;
   transition-duration: 0.3s;
   font-weight: 400;

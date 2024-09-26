@@ -39,6 +39,9 @@ componentHomePageLinksCollection {
         rightColumn {
           json
         }
+        projectLinks {
+          json
+        }
         paragraph1
         imageBlock1Collection(limit: 2) {
           items {

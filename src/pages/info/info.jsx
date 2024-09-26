@@ -102,8 +102,8 @@ const Info = () => {
 
   const imageStyle = {
     position: "absolute",
-    left: `${imgPosition.x + 10}px`,
-    top: `${imgPosition.y + 10}px`,
+    left: `${imgPosition.x + 20}px`,
+    top: `${imgPosition.y + 20}px`,
     width: "calc(100vw / 12 * 2)",
     display: hoverImg ? "block" : "none",
   };

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchData } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "../../components/Image/Image";
 import RichTextRenderer from "../../components/hyperlink/hyperlink";
+import { CSSTransition } from "react-transition-group";
 
 import "./projectSubPage.css";
 
@@ -34,11 +35,23 @@ const emphasizeProjectTitle = (summary, title) => {
 
 function ProjectSubPage() {
   const [projects, setProjects] = useState([]);
+  const [links, setLinks] = useState([]);
   const { slug } = useParams();
   const [bodyTextColor, setBodyTextColor] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("");
   const [foregroundColor, setForegroundColor] = useState("");
   const fruitWrapRef = useRef(null);
+  const rightColumnRef = useRef(null);
+
+  useEffect(() => {
+    fetchData()
+      .then((data) => {
+        setProjects(data.projectCollection.items);
+        setLinks(data.projectCollection.items.map((item) => item.projectLinks));
+        console.log("Fetched projects:", data.projectCollection.items);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   useEffect(() => {
     const randomColorPair =
@@ -79,14 +92,6 @@ function ProjectSubPage() {
     document.body.style.color = bodyTextColor;
   }, [bodyTextColor]);
 
-  useEffect(() => {
-    fetchData()
-      .then((data) => {
-        setProjects(data.projectCollection.items);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
   if (projects.length === 0) {
     return (
       <div className="content">
@@ -118,6 +123,19 @@ function ProjectSubPage() {
   const emphasizedSummary = emphasizeProjectTitle(
     project.projectSummary,
     project.projectTitle
+  );
+
+  const rightColumnContent = (
+    <>
+      {project.rightColumn && project.rightColumn.json && (
+        <div className="smll-txt">
+          {documentToReactComponents(project.rightColumn.json)}
+        </div>
+      )}
+      {project.projectLinks && project.projectLinks.json && (
+        <RichTextRenderer document={project.projectLinks.json} />
+      )}
+    </>
   );
 
   return (
@@ -203,14 +221,11 @@ function ProjectSubPage() {
               dangerouslySetInnerHTML={{ __html: paragraph4HTML }}
             />
           )}
+
           <br />
         </div>
       </div>
-      {project.rightColumn && project.rightColumn.json && (
-        <RightColumn>
-          <RichTextRenderer document={project.rightColumn.json} />
-        </RightColumn>
-      )}
+      <RightColumn text={rightColumnContent}></RightColumn>
     </div>
   );
 }
