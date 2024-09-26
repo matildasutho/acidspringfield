@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import "./musicplayer.css"; // Ensure you have the necessary CSS for positioning
 
 const Goobath = [
-  "/samples/Goobath/deep_bass.wav",
-  "/samples/Goobath/demon_spring.wav",
-  "/samples/Goobath/peace_pad.wav",
-  "/samples/Goobath/pluck.wav",
-  "/samples/Goobath/reverse_metalscrape.wav",
-  "/samples/Goobath/swamp_soda.wav",
-  "/samples/Goobath/waterlogged_dub.wav",
+  "/samples/Goobath/compost_horn.mp3",
+  "/samples/Goobath/cork_pop.mp3",
+  "/samples/Goobath/deep_bass.mp3",
+  "/samples/Goobath/demon_spring.mp3",
+  "/samples/Goobath/openoneeye.mp3",
+  "/samples/Goobath/peace_pad.mp3",
+  "/samples/Goobath/pluck.mp3",
+  "/samples/Goobath/reverse_metalscrape.mp3",
+  "/samples/Goobath/swamp_soda.mp3",
+  "/samples/Goobath/waterlogged_dub.mp3",
 ];
 
 const MusicPlayer = ({ onAudioReady }) => {
@@ -33,11 +36,14 @@ const MusicPlayer = ({ onAudioReady }) => {
   }, [onAudioReady]);
 
   const handleTogglePlayPause = (index) => {
-    if (audioRefs.current[index].paused) {
-      audioRefs.current[index].play();
+    const audioElement = audioRefs.current[index];
+    if (audioElement.paused) {
+      audioElement.play();
+      audioElement.parentElement.classList.add("audio-playing");
       console.log("playing");
     } else {
-      audioRefs.current[index].pause();
+      audioElement.pause();
+      audioElement.parentElement.classList.remove("audio-playing");
       console.log("paused");
     }
   };
@@ -61,7 +67,7 @@ const MusicPlayer = ({ onAudioReady }) => {
       }
     }
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < Goobath.length; i++) {
       const randomIndex = getRandomSample(usedIndices);
       usedIndices.push(randomIndex);
 
@@ -189,7 +195,16 @@ const MusicPlayer = ({ onAudioReady }) => {
             <audio
               ref={(el) => (audioRefs.current[index] = el)}
               src={sample.source}
-              loop
+              onPlay={() => {
+                audioRefs.current[index].parentElement.classList.add(
+                  "audio-playing"
+                );
+              }}
+              onPause={() => {
+                audioRefs.current[index].parentElement.classList.remove(
+                  "audio-playing"
+                );
+              }}
             />
             <p>{sample.label}</p>
           </div>

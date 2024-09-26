@@ -48,7 +48,7 @@ function ProjectSubPage() {
       .then((data) => {
         setProjects(data.projectCollection.items);
         setLinks(data.projectCollection.items.map((item) => item.projectLinks));
-        console.log("Fetched projects:", data.projectCollection.items);
+        // console.log("Fetched projects:", data.projectCollection.items);
       })
       .catch((error) => console.error(error));
   }, []);

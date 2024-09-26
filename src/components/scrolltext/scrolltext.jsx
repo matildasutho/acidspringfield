@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { fetchData } from "../../API/contentful/fetchContentful";
 import "./scrolltext.css";
 
 const ScrollText = () => {
   const [marqueeContent, setMarqueeContent] = useState("SOUND ON");
+  const [text, setText] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setMarqueeContent((prevContent) => prevContent + " SOUND ON");
-    }, 1700);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 

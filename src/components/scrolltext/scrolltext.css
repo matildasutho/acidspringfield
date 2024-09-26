@@ -28,7 +28,7 @@
     padding-right: 20px; /* Adjust spacing between items */
     color: var(--banner2);
   }
-  
+
   @keyframes marquee {
     0% {
       transform: translateX(0%);

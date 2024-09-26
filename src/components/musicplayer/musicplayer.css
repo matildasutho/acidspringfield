@@ -49,3 +49,25 @@
 .hidden {
   display: none;
 }
+
+.audio-playing {
+    /* animation: audioActive 1s infinite; */
+    transition: 0.3s ease-in-out;
+      opacity: 0.5;   
+      color: white;
+}
+
+@keyframes audioActive {
+    0% {
+        scale: 1;
+        opacity: 1;
+    }
+    50% {
+        scale: 1.5;
+        opacity: 0.5;   
+    }
+    100% {
+        scale: 1;
+        opacity: 1; 
+    }
+}

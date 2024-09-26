@@ -2,6 +2,14 @@ import React from "react";
 
 const query = `
   query {
+  componentScrollingTextCollection {
+    items {
+      entryTitle
+      textContent {
+        json
+      }
+    }
+  }
 componentHomePageLinksCollection {
       items {
         sys {

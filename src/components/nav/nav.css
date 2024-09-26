@@ -52,7 +52,7 @@
   color: var(--active);
 }
 .logo {
-  width: 150px;
+  width: calc(100vw / 12);
   position: fixed;
   z-index: 10;
   top: var(--global-padding);
