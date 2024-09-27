@@ -69,11 +69,11 @@ function Organ() {
      float lines(vec2 uv, float offset) {
          // Add noise to the UV coordinates to make the lines wiggly
          float noiseValue = noise(vec3(uv * 5.0, offset));
-         uv.y += noiseValue * 0.1; // Adjust the scale of the noise perturbation
+         uv.y += noiseValue * 0.5; // Adjust the scale of the noise perturbation
 
          return smoothstep(
              0.0, 0.5 + offset * 0.5,
-             0.5 * abs((sin(uv.x * 0.5) + offset * 2.0))
+             0.5 * abs((sin(uv.x * 0.2) + offset * 0.8))
          );
      }
 
@@ -85,12 +85,12 @@ function Organ() {
        vec3 pink = vec3(0.91,0.38,0.7);
        vec3 yellow = vec3(0.81,0.91,0.9);
        vec3 brown = vec3(0.23,0.16,0.12);
-       vec3 lightGrey = vec3(0.96,0.96,0.96);
+       vec3 lightGrey = vec3(1.0,1.0,1.0);
        vec3 darkGrey = vec3(0.05,0.05,0.05);
        vec3 black = vec3(0.0,0.0,0.);
 
        float n = noise(vPosition + time);
-       vec2 baseUV = rotate2D(n) * vUv * 10.0; // Adjusted scaling factor
+       vec2 baseUV = rotate2D(n) * vUv * 9.0; // Adjusted scaling factor
        float basePattern = lines(baseUV, 0.2);
        float secondPattern = lines(baseUV, 0.3);
 
@@ -122,8 +122,8 @@ function Organ() {
       controls.maxPolarAngle = Math.PI / 2;
 
       var geometry = new THREE.SphereGeometry(5, 64, 64);
-      geometry.rotateX(165);
-      geometry.rotateY(240);
+      geometry.rotateX(-180);
+      geometry.rotateY(176);
       material = new THREE.ShaderMaterial({
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,

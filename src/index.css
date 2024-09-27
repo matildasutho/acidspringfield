@@ -33,6 +33,8 @@ body {
   font-family: "neue-haas-grotesk-text", sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 12px;
+  line-height: 18px;
   color: var(--overlay);
   background-color: var(--background);
 }
