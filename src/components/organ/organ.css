@@ -8,8 +8,33 @@
 .audio-button {
     background: none;
     border: none;
+    animation: float 10s ease-in-out infinite;
 }
 .audio-button:hover {
     cursor: pointer;
     opacity: 0.5;
+}
+.audio-controls {
+    box-sizing: border-box;
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    /* padding: 5% 30% 5% 15%; */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Adjust the number of columns as needed */
+    grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */
+    gap: 10px; /* Adjust the gap between grid items as needed */
+
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

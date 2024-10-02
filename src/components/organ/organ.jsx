@@ -6,6 +6,7 @@ import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { DotScreenShader } from "./customshader.js";
 import "./organ.css";
+import RightColumn from "../rightColumn/rightColumn.jsx";
 
 const Goobath = [
   "/samples/Goobath/compost_horn.mp3",
@@ -26,6 +27,7 @@ function Organ() {
   const [audioObjects, setAudioObjects] = useState([]);
   const [audioAnalysers, setAudioAnalysers] = useState([]);
   const [buttonPositions, setButtonPositions] = useState([]);
+
   let composer;
 
   useEffect(() => {
@@ -116,7 +118,7 @@ function Organ() {
        vec3 secondBaseColor = mix(lightGrey, lightGrey, secondPattern);
 
        // Ripple effect
-       float ripple = 0.0;
+       float ripple = 0.1;
        for (int i = 0; i < ${Goobath.length}; i++) {
          float dist = distance(vUv, buttonPositions[i]);
          ripple += sin(dist * 10.0 - time * 2.0) * audioData[i];
@@ -148,7 +150,7 @@ function Organ() {
 
       var geometry = new THREE.SphereGeometry(5, 64, 64);
       geometry.rotateX(-140);
-      geometry.rotateY(160);
+      geometry.rotateY(178);
 
       // Create uniforms dynamically
       const uniforms = {
@@ -197,7 +199,7 @@ function Organ() {
       function animate() {
         requestAnimationFrame(animate);
         material.uniforms.time.value += 0.003;
-        renderer.render(scene, camera);
+        // renderer.render(scene, camera);
         controls.update();
         composer.render();
       }
@@ -242,6 +244,7 @@ function Organ() {
 
   useEffect(() => {
     let animationFrameId;
+    let time = 0;
 
     const updateAudioData = () => {
       if (audioAnalysers.length > 0) {
@@ -251,28 +254,22 @@ function Organ() {
           return (average / 256.0) * 10; // Normalize the value
         });
 
-        // Debug: Print the normalized average for each analyser
-        audioData.forEach((value, index) => {
-          console.log(`Normalized Average for Sample ${index + 1}:`, value);
-        });
+        // Check if all audioData values are zero (no audio playing)
+        const isAudioPlaying = audioData.some((value) => value > 0);
+
+        if (!isAudioPlaying) {
+          // Use sine/cosine wave to create a value between 0.3 and 0.7
+          const waveValue = 0.5 + 0.2 * Math.sin(time);
+          audioData.fill(waveValue);
+        }
 
         // Update the shader material with the audio data
         if (materialRef.current) {
           materialRef.current.uniforms.audioData.value = audioData;
-          // Debug: Print the updated uniform value
-          // console.log(
-          //   "Updated audioData uniform:",
-          //   materialRef.current.uniforms.audioData.value
-          // );
-        } else {
-          // Debug: Material not found
-          // console.log("Material not found in materialRef.current");
         }
-      } else {
-        // Debug: No audio analysers found
-        // console.log("No audio analysers found");
       }
 
+      time += 0.03; // Increment time for the sine wave
       animationFrameId = requestAnimationFrame(updateAudioData);
     };
 
@@ -326,6 +323,7 @@ function Organ() {
           </button>
         ))}
       </div>
+      <RightColumn />
     </div>
   );
 }

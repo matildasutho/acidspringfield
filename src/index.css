@@ -44,14 +44,14 @@ h1 {
   font-weight: 400;
 }
 h2 {
-  font-size: 2rem;
-  line-height: 2rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   font-weight: 400;
   text-transform: uppercase;
 }
 h3 {
-  font-size: 1.1rem;
-  line-height: 1.3rem;
+  font-size: 0.8rem;
+  line-height: 1rem;
   font-weight: 200;
   color: var(--overlay);
 }
@@ -98,7 +98,7 @@ a:hover {
   font-weight: 400;
 }
 .smll-txt {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   line-height: 0.9rem;
   color: var(--overlay);
   font-weight: 200;
