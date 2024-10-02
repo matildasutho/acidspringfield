@@ -26,11 +26,11 @@ const Home = ({ onAudioReady }) => {
     <>
       <div className="main-container">
         <div className="content">
-          <MusicPlayer onAudioReady={handleAudioReady} />
+          {/* <MusicPlayer onAudioReady={handleAudioReady} /> */}
           <div className="cloud-BG"></div>
         </div>
       </div>
-      <RightColumn text="" />
+      {/* <RightColumn text="" /> */}
     </>
   );
 };

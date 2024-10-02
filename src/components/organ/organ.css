@@ -5,3 +5,11 @@
     z-index: -50;
     opacity: var(--opacity);
 }
+.audio-button {
+    background: none;
+    border: none;
+}
+.audio-button:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}

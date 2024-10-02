@@ -5,22 +5,14 @@ import { fetchData } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "../../components/Image/Image";
 import RichTextRenderer from "../../components/hyperlink/hyperlink";
-import { CSSTransition } from "react-transition-group";
 
 import "./projectSubPage.css";
 
-const colorPairs = [
-  { background: "#EFF3E8", foreground: "#EFF3E8" },
-  { background: "#FFB6C7", foreground: "#7A7064" },
-  { background: "#D0F85F", foreground: "#D0F85F" },
-];
-
-// Function to generate slug from project title
 const generateSlug = (title) => {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, "") // Remove symbols
-    .replace(/\s+/g, ""); // Replace spaces with %
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, "");
 };
 // Utility function to convert text to HTML with line breaks
 const convertToHTML = (text) => {
@@ -38,8 +30,6 @@ function ProjectSubPage() {
   const [links, setLinks] = useState([]);
   const { slug } = useParams();
   const [bodyTextColor, setBodyTextColor] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("");
-  const [foregroundColor, setForegroundColor] = useState("");
   const fruitWrapRef = useRef(null);
   const rightColumnRef = useRef(null);
 
@@ -54,21 +44,14 @@ function ProjectSubPage() {
   }, []);
 
   useEffect(() => {
-    const randomColorPair =
-      colorPairs[Math.floor(Math.random() * colorPairs.length)];
-    setBackgroundColor(randomColorPair.background);
-    setForegroundColor(randomColorPair.foreground);
-  }, []);
-
-  useEffect(() => {
     const handleScroll = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const randomColorPair =
-            colorPairs[Math.floor(Math.random() * colorPairs.length)];
-          setBodyTextColor(randomColorPair.foreground);
+          document.body.classList.add("fruit-wrap-visible");
+          console.log("fruit-wrap-visible");
         } else {
-          setBodyTextColor("");
+          document.body.classList.remove("fruit-wrap-visible");
+          console.log("fruit-wrap-not-visible");
         }
       });
     };
@@ -87,10 +70,6 @@ function ProjectSubPage() {
       }
     };
   }, []);
-
-  useEffect(() => {
-    document.body.style.color = bodyTextColor;
-  }, [bodyTextColor]);
 
   if (projects.length === 0) {
     return (
@@ -177,8 +156,6 @@ function ProjectSubPage() {
           className="fruit-wrap content"
           ref={fruitWrapRef}
           style={{
-            backgroundColor: backgroundColor,
-            color: foregroundColor,
             height: "100%",
           }}
         >

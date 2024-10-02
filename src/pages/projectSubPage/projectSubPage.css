@@ -42,7 +42,7 @@
   height: fit-content;
   display: flex;
   flex-direction: row;
-  gap: var(--global-padding);
+  gap: 0.5rem;
   margin-left: auto;
 }
 
@@ -72,8 +72,8 @@
   height: fit-content;
   display: flex;
   flex-direction: row;
-  gap: var(--global-padding);
-  margin-left: auto;
+  gap: 0.5rem;
+  margin-right: auto;
 }
 .fruit-wrap {
   height: 400vh;

@@ -163,6 +163,7 @@ const MusicPlayer = ({ onAudioReady }) => {
     }
   };
 
+
   return (
     <>
       {showTrigger && (

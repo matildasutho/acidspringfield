@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -7,12 +7,29 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { DotScreenShader } from "./customshader.js";
 import "./organ.css";
 
+const Goobath = [
+  "/samples/Goobath/compost_horn.mp3",
+  "/samples/Goobath/cork_pop.mp3",
+  "/samples/Goobath/deep_bass.mp3",
+  "/samples/Goobath/demon_spring.mp3",
+  "/samples/Goobath/openoneeye.mp3",
+  "/samples/Goobath/peace_pad.mp3",
+  "/samples/Goobath/pluck.mp3",
+  "/samples/Goobath/reverse_metalscrape.mp3",
+  "/samples/Goobath/swamp_soda.mp3",
+  "/samples/Goobath/waterlogged_dub.mp3",
+];
+
 function Organ() {
   const refContainer = useRef(null);
+  const materialRef = useRef(null); // Ref to store the material
+  const [audioObjects, setAudioObjects] = useState([]);
+  const [audioAnalysers, setAudioAnalysers] = useState([]);
+  const [buttonPositions, setButtonPositions] = useState([]);
   let composer;
 
   useEffect(() => {
-    let renderer, scene, camera, controls, material;
+    let renderer, scene, camera, controls;
 
     function init() {
       // Vertex shader code
@@ -32,7 +49,8 @@ function Organ() {
       // Fragment shader code
       const fragmentShader = `
      uniform float time;
-     uniform float progress;
+     uniform vec2 buttonPositions[${Goobath.length}];
+     uniform float audioData[${Goobath.length}];
      uniform sampler2D texture1;
      uniform vec4 resolution;
      varying vec2 vUv;
@@ -68,12 +86,12 @@ function Organ() {
 
      float lines(vec2 uv, float offset) {
          // Add noise to the UV coordinates to make the lines wiggly
-         float noiseValue = noise(vec3(uv * 5.0, offset));
-         uv.y += noiseValue * 0.5; // Adjust the scale of the noise perturbation
+         float noiseValue = noise(vec3(uv * 0.2, offset));
+         uv.y += noiseValue * 0.2; // Adjust the scale of the noise perturbation
 
          return smoothstep(
              0.0, 0.5 + offset * 0.5,
-             0.5 * abs((sin(uv.x * 0.2) + offset * 0.8))
+             0.5 * abs((sin(uv.x * 0.3) + offset * 0.2))
          );
      }
 
@@ -90,14 +108,21 @@ function Organ() {
        vec3 black = vec3(0.0,0.0,0.);
 
        float n = noise(vPosition + time);
-       vec2 baseUV = rotate2D(n) * vUv * 9.0; // Adjusted scaling factor
+       vec2 baseUV = rotate2D(n) * vUv * 10.0; // Adjusted scaling factor
        float basePattern = lines(baseUV, 0.2);
        float secondPattern = lines(baseUV, 0.3);
 
-       vec3 baseColor = mix(lightGrey, lightGrey, basePattern);
-       vec3 secondBaseColor = mix(baseColor, black, secondPattern);
+       vec3 baseColor = mix(lightGrey, black, basePattern);
+       vec3 secondBaseColor = mix(lightGrey, lightGrey, secondPattern);
 
-       gl_FragColor = vec4(secondBaseColor, 1.0);
+       // Ripple effect
+       float ripple = 0.0;
+       for (int i = 0; i < ${Goobath.length}; i++) {
+         float dist = distance(vUv, buttonPositions[i]);
+         ripple += sin(dist * 10.0 - time * 2.0) * audioData[i];
+       }
+
+       gl_FragColor = vec4(secondBaseColor * (1.0 + ripple), 1.5);
      }
    `;
 
@@ -122,20 +147,52 @@ function Organ() {
       controls.maxPolarAngle = Math.PI / 2;
 
       var geometry = new THREE.SphereGeometry(5, 64, 64);
-      geometry.rotateX(-180);
-      geometry.rotateY(176);
-      material = new THREE.ShaderMaterial({
+      geometry.rotateX(-140);
+      geometry.rotateY(160);
+
+      // Create uniforms dynamically
+      const uniforms = {
+        time: { value: 0.001 },
+        buttonPositions: {
+          value: new Array(Goobath.length).fill(new THREE.Vector2()),
+        },
+        audioData: { value: new Array(Goobath.length).fill(0.0) },
+      };
+
+      const material = new THREE.ShaderMaterial({
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
-        uniforms: {
-          time: { value: 0.001 },
-        },
+        uniforms: uniforms,
         side: THREE.DoubleSide,
       });
+      materialRef.current = material; // Store the material in the ref
       var sphere = new THREE.Mesh(geometry, material);
 
       scene.add(sphere);
       camera.position.z = 0;
+
+      const listener = new THREE.AudioListener();
+      camera.add(listener);
+
+      const audioObjects = Goobath.map((sample) => {
+        const sound = new THREE.Audio(listener);
+        const audioLoader = new THREE.AudioLoader();
+
+        audioLoader.load(sample, function (buffer) {
+          sound.setBuffer(buffer);
+          sound.setLoop(false);
+          sound.setVolume(0.5);
+          scene.add(sound);
+        });
+        return sound;
+      });
+
+      const audioAnalysers = audioObjects.map(
+        (sound) => new THREE.AudioAnalyser(sound, 256)
+      );
+
+      setAudioObjects(audioObjects);
+      setAudioAnalysers(audioAnalysers);
 
       function animate() {
         requestAnimationFrame(animate);
@@ -168,6 +225,13 @@ function Organ() {
     window.addEventListener("resize", onWindowResize, false);
     init();
 
+    // Generate random positions for buttons
+    const positions = Goobath.map(() => ({
+      top: `${Math.random() * 80 + 10}%`,
+      left: `${Math.random() * 80 + 10}%`,
+    }));
+    setButtonPositions(positions);
+
     return () => {
       window.removeEventListener("resize", onWindowResize);
       if (refContainer.current) {
@@ -176,7 +240,94 @@ function Organ() {
     };
   }, []);
 
-  return <div className="threejs-canvas" ref={refContainer}></div>;
+  useEffect(() => {
+    let animationFrameId;
+
+    const updateAudioData = () => {
+      if (audioAnalysers.length > 0) {
+        const audioData = audioAnalysers.map((analyser) => {
+          const data = analyser.getFrequencyData();
+          const average = data.reduce((a, b) => a + b) / data.length;
+          return (average / 256.0) * 10; // Normalize the value
+        });
+
+        // Debug: Print the normalized average for each analyser
+        audioData.forEach((value, index) => {
+          console.log(`Normalized Average for Sample ${index + 1}:`, value);
+        });
+
+        // Update the shader material with the audio data
+        if (materialRef.current) {
+          materialRef.current.uniforms.audioData.value = audioData;
+          // Debug: Print the updated uniform value
+          // console.log(
+          //   "Updated audioData uniform:",
+          //   materialRef.current.uniforms.audioData.value
+          // );
+        } else {
+          // Debug: Material not found
+          // console.log("Material not found in materialRef.current");
+        }
+      } else {
+        // Debug: No audio analysers found
+        // console.log("No audio analysers found");
+      }
+
+      animationFrameId = requestAnimationFrame(updateAudioData);
+    };
+
+    updateAudioData();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [audioAnalysers]);
+
+  useEffect(() => {
+    if (materialRef.current) {
+      const buttonPositionsVec2 = buttonPositions.map((pos) => {
+        const x = parseFloat(pos.left) / 100;
+        const y = parseFloat(pos.top) / 100;
+        return new THREE.Vector2(x, y);
+      });
+      materialRef.current.uniforms.buttonPositions.value = buttonPositionsVec2;
+    }
+  }, [buttonPositions]);
+
+  const handlePlayPause = (index) => {
+    const sound = audioObjects[index];
+    if (sound.isPlaying) {
+      sound.pause();
+    } else {
+      sound.play();
+    }
+  };
+
+  const getFileName = (filePath) => {
+    return filePath.split("/").pop().split(".")[0];
+  };
+
+  return (
+    <div>
+      <div className="threejs-canvas" ref={refContainer}></div>
+      <div className="audio-controls">
+        {Goobath.map((sample, index) => (
+          <button
+            key={index}
+            onClick={() => handlePlayPause(index)}
+            className="audio-button"
+            style={{
+              position: "absolute",
+              top: buttonPositions[index]?.top,
+              left: buttonPositions[index]?.left,
+            }}
+          >
+            <p>{getFileName(sample)}</p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Organ;
