@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { useLocation } from "react-router-dom";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -27,8 +28,19 @@ function Organ() {
   const [audioObjects, setAudioObjects] = useState([]);
   const [audioAnalysers, setAudioAnalysers] = useState([]);
   const [buttonPositions, setButtonPositions] = useState([]);
+  const location = useLocation();
 
   let composer;
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      document.getElementsByClassName("audio-controls")[0].style.display =
+        "block";
+    } else {
+      document.getElementsByClassName("audio-controls")[0].style.display =
+        "none";
+    }
+  }, [location]);
 
   useEffect(() => {
     let renderer, scene, camera, controls;
@@ -176,7 +188,7 @@ function Organ() {
       const listener = new THREE.AudioListener();
       camera.add(listener);
 
-      const audioObjects = Goobath.map((sample) => {
+      const audioObjects = Goobath.map((sample, index) => {
         const sound = new THREE.Audio(listener);
         const audioLoader = new THREE.AudioLoader();
 
@@ -186,6 +198,16 @@ function Organ() {
           sound.setVolume(0.5);
           scene.add(sound);
         });
+
+        sound.onEnded = () => {
+          console.log("onEnded");
+          sound.isPlaying = false;
+          document.getElementsByClassName("audio-button")[
+            index
+          ].style.animation = "";
+          document.getElementsByClassName("audio-button")[index].style.color =
+            "var(--overlay)";
+        };
         return sound;
       });
 
@@ -297,6 +319,10 @@ function Organ() {
       sound.pause();
     } else {
       sound.play();
+      document.getElementsByClassName("audio-button")[index].style.animation =
+        "active-audio 3s ease-in-out infinite";
+      // document.getElementsByClassName("audio-button")[index].style.color =
+      //   "white";
     }
   };
 
@@ -319,11 +345,14 @@ function Organ() {
               left: buttonPositions[index]?.left,
             }}
           >
-            <p>{getFileName(sample)}</p>
+            {/* <span className="point-symbol"></span> */}
+
+            <span>{getFileName(sample)}</span>
+            <span>.mp3</span>
           </button>
         ))}
       </div>
-      <RightColumn />
+
     </div>
   );
 }

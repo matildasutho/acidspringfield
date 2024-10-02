@@ -155,9 +155,10 @@ infoCollection {
       items {
         infoSummary
         paragraph1
-          rightColumn {
+        rightColumn {
           json
-      }
+        }
+          
       heroImage {
         title
           description

@@ -4,7 +4,7 @@ import { fetchData } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 import "./info.css";
-import { mix } from "three/webgpu";
+
 
 // Utility function to convert text to HTML with line breaks
 const convertToHTML = (text) => {
