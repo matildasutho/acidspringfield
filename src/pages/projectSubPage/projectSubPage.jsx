@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import RightColumn from "../../components/rightColumn/rightColumn";
-import { fetchData } from "../../API/contentful/fetchContentful";
+import { fetchProjects } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import MediaBlockCollection from "../../components/mediablockcollection/mediablockcollection";
 import Image from "../../components/Image/Image";
 import RichTextRenderer from "../../components/hyperlink/hyperlink";
 
@@ -14,6 +15,7 @@ const generateSlug = (title) => {
     .replace(/[^a-z0-9\s]/g, "")
     .replace(/\s+/g, "");
 };
+
 // Utility function to convert text to HTML with line breaks
 const convertToHTML = (text) => {
   return text.replace(/\n/g, "<br />");
@@ -29,18 +31,23 @@ function ProjectSubPage() {
   const [projects, setProjects] = useState([]);
   const [links, setLinks] = useState([]);
   const { slug } = useParams();
-  const [bodyTextColor, setBodyTextColor] = useState("");
   const fruitWrapRef = useRef(null);
   const rightColumnRef = useRef(null);
 
   useEffect(() => {
-    fetchData()
-      .then((data) => {
-        setProjects(data.projectCollection.items);
-        setLinks(data.projectCollection.items.map((item) => item.projectLinks));
-        // console.log("Fetched projects:", data.projectCollection.items);
-      })
-      .catch((error) => console.error(error));
+    const fetchData = async () => {
+      try {
+        const data = await fetchProjects();
+        const fetchedText = data.projectCollection.items;
+        // console.log("Fetched projects:", fetchedText);
+        setProjects(fetchedText);
+        setLinks(fetchedText.map((item) => item.projectLinks));
+      } catch (error) {
+        console.error("Error fetching project content subpage:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -88,6 +95,8 @@ function ProjectSubPage() {
     return <div>Project not found</div>;
   }
 
+  // console.log("Selected project:", project);
+
   const paragraph1HTML = convertToHTML(project.paragraph1);
   const paragraph2HTML = project.paragraph2
     ? convertToHTML(project.paragraph2)
@@ -116,6 +125,11 @@ function ProjectSubPage() {
       )}
     </>
   );
+
+  // console.log(
+  //   "MediaBlockCollection items:",
+  //   project.mediaBlockCollection?.items
+  // );
 
   return (
     <div className="flex-row">
@@ -198,7 +212,11 @@ function ProjectSubPage() {
               dangerouslySetInnerHTML={{ __html: paragraph4HTML }}
             />
           )}
-
+          <br />
+          {project.mediaBlockCollection && (
+            <MediaBlockCollection items={project.mediaBlockCollection?.items} />
+          )}
+          <br />
           <br />
         </div>
       </div>

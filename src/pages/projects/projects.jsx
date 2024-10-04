@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchData } from "../../API/contentful/fetchContentful";
+import { fetchProjects } from "../../API/contentful/fetchContentful";
 import "./projects.css";
 
 // Function to generate slug from project title
@@ -16,6 +16,20 @@ const Projects = () => {
   const [hoverImg, setHoverImg] = useState(null);
   const [imgPosition, setImgPosition] = useState({ x: 0, y: 0 });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchProjects();
+        const fetchedText = data.projectCollection.items;
+        setProjects(fetchedText);
+      } catch (error) {
+        console.error("Error fetching project content:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleButtonHover = (imagePath) => {
     setHoverImg(imagePath);
   };
@@ -23,14 +37,6 @@ const Projects = () => {
   const handleImageMouseMove = (e) => {
     setImgPosition({ x: e.clientX, y: e.clientY });
   };
-
-  useEffect(() => {
-    fetchData()
-      .then((data) => {
-        setProjects(data.projectCollection.items);
-      })
-      .catch((error) => console.error(error));
-  }, []);
 
   return (
     <>

@@ -40,11 +40,13 @@ const MusicPlayer = ({ onAudioReady }) => {
     if (audioElement.paused) {
       audioElement.play();
       audioElement.parentElement.classList.add("audio-playing");
-      console.log("playing");
+      setIsPlaying(true);
+      // console.log("playing");
     } else {
       audioElement.pause();
       audioElement.parentElement.classList.remove("audio-playing");
-      console.log("paused");
+      setIsPlaying(false);
+      // console.log("paused");
     }
   };
 
@@ -83,7 +85,7 @@ const MusicPlayer = ({ onAudioReady }) => {
       });
     }
 
-    console.log(selectedSamples);
+    // console.log(selectedSamples);
     setAudioSamples(selectedSamples);
   };
 
@@ -140,9 +142,9 @@ const MusicPlayer = ({ onAudioReady }) => {
       const animationName = keyframes.match(/@keyframes\s+(\S+)\s*\{/)[1];
       audioRefs.current[
         index
-      ].parentElement.style.animation = `${animationName} 15s ease-in-out infinite`;
+      ].style.animation = `${animationName} 15s ease-in-out infinite-reverse`;
     });
-  }, [audioSamples]);
+  }, [audioSamples, isPlaying]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -158,7 +160,7 @@ const MusicPlayer = ({ onAudioReady }) => {
   const handleUserGesture = () => {
     if (audioContextRef.current.state === "suspended") {
       audioContextRef.current.resume().then(() => {
-        console.log("AudioContext resumed");
+        // console.log("AudioContext resumed");
       });
     }
   };

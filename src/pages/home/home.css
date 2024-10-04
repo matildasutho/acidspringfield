@@ -21,11 +21,16 @@
     top: calc(50vh - 120px);
     display: flex;
     align-items: center;
+    justify-content: center;
     color: var(--overlay);
     cursor: pointer;
+
 }
 .audio-trig h3 {
     text-wrap: wrap;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    padding: 0rem 2rem;
 }
 .fade-out {
   opacity: 0;

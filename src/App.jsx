@@ -19,6 +19,7 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--overlay", "#9D989A");
     document.documentElement.style.setProperty("--background", "#FFF5E1E5");
     document.documentElement.style.setProperty("--active", "#9D989A");
+    document.documentElement.style.setProperty("--hover", "#007be5");
     document.documentElement.style.setProperty("--opacity", "1");
     document.documentElement.style.setProperty("--banner1", "#FFF5E1");
     document.documentElement.style.setProperty("--banner2", "#000000");

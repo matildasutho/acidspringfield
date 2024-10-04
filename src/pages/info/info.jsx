@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import RightColumn from "../../components/rightColumn/rightColumn";
-import { fetchData } from "../../API/contentful/fetchContentful";
+import { fetchInfo } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 import "./info.css";
-
 
 // Utility function to convert text to HTML with line breaks
 const convertToHTML = (text) => {
@@ -25,6 +24,20 @@ const Info = () => {
   const [hoverImg, setHoverImg] = useState(null);
   const [imgPosition, setImgPosition] = useState({ x: 0, y: 0 });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchInfo();
+        const fetchedText = data.infoCollection.items;
+        setInfo(fetchedText);
+      } catch (error) {
+        console.error("Error fetching info content:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleButtonHover = (imagePath) => {
     setHoverImg(imagePath);
   };
@@ -32,14 +45,6 @@ const Info = () => {
   const handleImageMouseMove = (e) => {
     setImgPosition({ x: e.clientX, y: e.clientY });
   };
-
-  useEffect(() => {
-    fetchData()
-      .then((data) => {
-        setInfo(data.infoCollection.items);
-      })
-      .catch((error) => console.error(error));
-  }, []);
 
   useEffect(() => {
     document.body.classList.add("info-page");

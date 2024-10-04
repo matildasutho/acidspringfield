@@ -1,19 +1,16 @@
-const scrollingTextQuery = `
+import React from "react";
+
+const query = `
   query {
-    componentScrollingTextCollection {
-      items {
-        entryTitle
-        textContent {
-          json
-        }
+  componentScrollingTextCollection {
+    items {
+      entryTitle
+      textContent {
+        json
       }
     }
   }
-`;
-
-const homePageLinksQuery = `
-  query {
-    componentHomePageLinksCollection {
+componentHomePageLinksCollection {
       items {
         sys {
           id
@@ -27,11 +24,6 @@ const homePageLinksQuery = `
         }
       }
     }
-  }
-`;
-
-const projectQuery = `
-  query {
     projectCollection {
       items {
         sys {
@@ -101,6 +93,7 @@ const projectQuery = `
             sys {
               id
             }
+         
             ... on ComponentImageBlockDouble {
               internalTitle
               imageBlockCollection(limit: 2) {
@@ -158,20 +151,16 @@ const projectQuery = `
         }
       }
     }
-  }
-`;
-
-const infoQuery = `
-  query {
-    infoCollection {
+infoCollection {
       items {
         infoSummary
         paragraph1
         rightColumn {
           json
         }
-        heroImage {
-          title
+          
+      heroImage {
+        title
           description
           contentType
           fileName
@@ -190,7 +179,8 @@ const infoQuery = `
           width
           height
         }
-        ericaImage {
+        ericaImage
+        {
           title
           description
           contentType
@@ -205,7 +195,7 @@ const infoQuery = `
   }
 `;
 
-const fetchContentfulData = async (query) => {
+export async function fetchData() {
   const response = await fetch(
     "https://graphql.contentful.com/content/v1/spaces/pov2gvdkmhdq/",
     {
@@ -226,9 +216,4 @@ const fetchContentfulData = async (query) => {
   }
 
   return data;
-};
-
-export const fetchScrollingText = () => fetchContentfulData(scrollingTextQuery);
-export const fetchHomePageLinks = () => fetchContentfulData(homePageLinksQuery);
-export const fetchProjects = () => fetchContentfulData(projectQuery);
-export const fetchInfo = () => fetchContentfulData(infoQuery);
+}

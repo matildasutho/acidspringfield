@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { fetchData } from "../../API/contentful/fetchContentful";
+import { fetchHomePageLinks } from "../../API/contentful/fetchContentful";
 import RichTextRenderer from "../../components/hyperlink/hyperlink";
 import "./nav.css"; // Ensure you have the necessary CSS
 
@@ -10,11 +10,17 @@ const Nav = () => {
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
-    fetchData()
-      .then((data) => {
-        setLinks(data.componentHomePageLinksCollection.items);
-      })
-      .catch((error) => console.error(error));
+    const fetchData = async () => {
+      try {
+        const data = await fetchHomePageLinks();
+        const fetchedText = data.componentHomePageLinksCollection.items;
+        setLinks(fetchedText);
+      } catch (error) {
+        console.error("Error fetching homepage links subpage:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

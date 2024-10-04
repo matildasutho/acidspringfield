@@ -9,7 +9,7 @@
 
     background-color: rgba(0, 0, 0, 0);
     border: none;
-    animation: float 9s ease-in-out infinite;
+    /* animation: float 9s ease-in-out infinite; */
     display: flex;
     flex-direction: row;
     color: var(--overlay);
@@ -19,8 +19,8 @@
 .audio-button:hover {
     cursor: pointer;
     background-color: #000000;
-    /* color: white; */
-    transition: background-color 0.2s ease-in-out;
+    color: white;
+    transition: background-color 0.1s ease-in-out;
     
 }
 .audio-controls {
@@ -28,7 +28,7 @@
     position: absolute;
     width: 80%;
     height: 90%;
-    /* padding: 5% 30% 5% 15%; */
+    margin-left: calc(100vw / 12 * 2);
     display: grid;
     grid-template-columns: repeat(12, 1fr); /* Adjust the number of columns as needed */
     grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */

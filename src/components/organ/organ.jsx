@@ -6,8 +6,38 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { DotScreenShader } from "./customshader.js";
+import vertexShader from "./shaders/vertexShader.glsl";
+import fragmentShader from "./shaders/fragmentShader.glsl";
 import "./organ.css";
 import RightColumn from "../rightColumn/rightColumn.jsx";
+import AudioControls from "./audiocontrols.jsx"; // Import the new component
+
+const generateRandomKeyframes = () => {
+  const x1 = Math.random() * 15 - 12;
+  const y1 = Math.random() * 15 - 12;
+  const x2 = Math.random() * 15 - 12;
+  const y2 = Math.random() * 15 - 12;
+
+  return `
+    @keyframes float${Math.random().toString(36).substr(2, 9)} {
+      0% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(${x1}px, ${y1}px);
+      }
+      50% {
+        transform: translate(${x2}px, ${y2}px);
+      }
+      75% {
+        transform: translate(${x1}px, ${y1}px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+  `;
+};
 
 const Goobath = [
   "/samples/Goobath/compost_horn.mp3",
@@ -25,6 +55,8 @@ const Goobath = [
 function Organ() {
   const refContainer = useRef(null);
   const materialRef = useRef(null); // Ref to store the material
+  const animationStyleSheet = useRef(null); // Ref to store the stylesheet
+  const audioRefs = useRef([]); // Ref to store audio button references
   const [audioObjects, setAudioObjects] = useState([]);
   const [audioAnalysers, setAudioAnalysers] = useState([]);
   const [buttonPositions, setButtonPositions] = useState([]);
@@ -46,99 +78,12 @@ function Organ() {
     let renderer, scene, camera, controls;
 
     function init() {
-      // Vertex shader code
-      const vertexShader = `
-     uniform float time;
-     varying vec2 vUv;
-     varying vec3 vPosition;
-     uniform vec2 pixels;
-     float PI = 3.141592653589793238;
-     void main() {
-       vUv = uv;
-       vPosition = position;
-       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-     }
-   `;
-
-      // Fragment shader code
-      const fragmentShader = `
-     uniform float time;
-     uniform vec2 buttonPositions[${Goobath.length}];
-     uniform float audioData[${Goobath.length}];
-     uniform sampler2D texture1;
-     uniform vec4 resolution;
-     varying vec2 vUv;
-     varying vec3 vPosition;
-     float PI = 3.141592653589793238;
-
-     // NOISE
-     float mod289(float x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-     vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-     vec4 perm(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
-
-     float noise(vec3 p) {
-         vec3 a = floor(p);
-         vec3 d = p - a;
-         d = d * d * (3.0 - 2.0 * d);
-
-         vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);
-         vec4 k1 = perm(b.xyxy);
-         vec4 k2 = perm(k1.xyxy + b.zzww);
-
-         vec4 c = k2 + a.zzzz;
-         vec4 k3 = perm(c);
-         vec4 k4 = perm(c + 1.0);
-
-         vec4 o1 = fract(k3 * (1.0 / 41.0));
-         vec4 o2 = fract(k4 * (1.0 / 41.0));
-
-         vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);
-         vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);
-
-         return o4.y * d.y + o4.x * (1.0 - d.y);
-     }
-
-     float lines(vec2 uv, float offset) {
-         // Add noise to the UV coordinates to make the lines wiggly
-         float noiseValue = noise(vec3(uv * 0.2, offset));
-         uv.y += noiseValue * 0.2; // Adjust the scale of the noise perturbation
-
-         return smoothstep(
-             0.0, 0.5 + offset * 0.5,
-             0.5 * abs((sin(uv.x * 0.3) + offset * 0.2))
-         );
-     }
-
-     mat2 rotate2D(float a) {
-       return mat2(cos(a), -sin(a), sin(a), cos(a));
-     } 
-
-     void main() {
-       vec3 pink = vec3(0.91,0.38,0.7);
-       vec3 yellow = vec3(0.81,0.91,0.9);
-       vec3 brown = vec3(0.23,0.16,0.12);
-       vec3 lightGrey = vec3(1.0,1.0,1.0);
-       vec3 darkGrey = vec3(0.05,0.05,0.05);
-       vec3 black = vec3(0.0,0.0,0.);
-
-       float n = noise(vPosition + time);
-       vec2 baseUV = rotate2D(n) * vUv * 10.0; // Adjusted scaling factor
-       float basePattern = lines(baseUV, 0.2);
-       float secondPattern = lines(baseUV, 0.3);
-
-       vec3 baseColor = mix(lightGrey, black, basePattern);
-       vec3 secondBaseColor = mix(lightGrey, lightGrey, secondPattern);
-
-       // Ripple effect
-       float ripple = 0.1;
-       for (int i = 0; i < ${Goobath.length}; i++) {
-         float dist = distance(vUv, buttonPositions[i]);
-         ripple += sin(dist * 10.0 - time * 2.0) * audioData[i];
-       }
-
-       gl_FragColor = vec4(secondBaseColor * (1.0 + ripple), 1.5);
-     }
-   `;
+      // Generate random positions for buttons
+      const positions = Goobath.map(() => ({
+        top: `${Math.random() * 80 + 10}%`,
+        left: `${Math.random() * 80 + 10}%`,
+      }));
+      setButtonPositions(positions);
 
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(
@@ -218,21 +163,31 @@ function Organ() {
       setAudioObjects(audioObjects);
       setAudioAnalysers(audioAnalysers);
 
-      function animate() {
-        requestAnimationFrame(animate);
-        material.uniforms.time.value += 0.003;
-        // renderer.render(scene, camera);
-        controls.update();
-        composer.render();
-      }
-
       function initPost() {
         composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-
         const effect1 = new ShaderPass(DotScreenShader);
         effect1.uniforms.scale.value = 4;
         composer.addPass(effect1);
+      }
+
+      function animate() {
+        const frameRate = 30; // Desired frame rate in frames per second
+        const interval = 1000 / frameRate; // Interval in milliseconds
+
+        function render() {
+          material.uniforms.time.value += 0.003;
+          renderer.render(scene, camera);
+          controls.update();
+          composer.render();
+        }
+
+        function loop() {
+          render();
+          setTimeout(loop, interval);
+        }
+
+        loop();
       }
 
       initPost();
@@ -248,13 +203,6 @@ function Organ() {
 
     window.addEventListener("resize", onWindowResize, false);
     init();
-
-    // Generate random positions for buttons
-    const positions = Goobath.map(() => ({
-      top: `${Math.random() * 80 + 10}%`,
-      left: `${Math.random() * 80 + 10}%`,
-    }));
-    setButtonPositions(positions);
 
     return () => {
       window.removeEventListener("resize", onWindowResize);
@@ -291,7 +239,7 @@ function Organ() {
         }
       }
 
-      time += 0.03; // Increment time for the sine wave
+      time += 0.01; // Increment time for the sine wave
       animationFrameId = requestAnimationFrame(updateAudioData);
     };
 
@@ -313,19 +261,57 @@ function Organ() {
     }
   }, [buttonPositions]);
 
+  useEffect(() => {
+    if (!animationStyleSheet.current) {
+      const style = document.createElement("style");
+      document.head.appendChild(style);
+      animationStyleSheet.current = style.sheet;
+    }
+
+    audioObjects.forEach((sample, index) => {
+      const keyframes = generateRandomKeyframes();
+      animationStyleSheet.current.insertRule(
+        keyframes,
+        animationStyleSheet.current.cssRules.length
+      );
+      const animationName = keyframes.match(/@keyframes\s+(\S+)\s*\{/)[1];
+      audioRefs.current[
+        index
+      ].style.animation = `${animationName} 15s ease-in-out infinite`;
+    });
+  }, [audioObjects]);
+
   const handlePlayPause = (index) => {
     const sound = audioObjects[index];
+    const button = document.getElementsByClassName("audio-button")[index];
+
     if (sound.isPlaying) {
       sound.pause();
+      // Restore the original animation when paused
+      const originalAnimation = button.dataset.originalAnimation;
+      button.style.animation = originalAnimation;
+      button.style.color = "var(--overlay)";
     } else {
       sound.play();
-      document.getElementsByClassName("audio-button")[index].style.animation =
-        "active-audio 3s ease-in-out infinite";
-      // document.getElementsByClassName("audio-button")[index].style.color =
-      //   "white";
+      // Store the original animation in a data attribute
+      button.dataset.originalAnimation = button.style.animation;
+      const existingAnimation = button.style.animation;
+      button.style.animation = `${existingAnimation}, active-audio 3s ease-in-out infinite`;
+      button.style.color = "white";
     }
   };
 
+  // Update the onEnded event handler to restore the original animation
+  audioObjects.forEach((sound, index) => {
+    sound.onEnded = () => {
+      console.log("onEnded");
+      sound.isPlaying = false;
+      const button = document.getElementsByClassName("audio-button")[index];
+      const originalAnimation = button.dataset.originalAnimation;
+      button.style.animation = originalAnimation;
+      button.style.color = "var(--overlay)";
+    };
+  });
   const getFileName = (filePath) => {
     return filePath.split("/").pop().split(".")[0];
   };
@@ -333,26 +319,13 @@ function Organ() {
   return (
     <div>
       <div className="threejs-canvas" ref={refContainer}></div>
-      <div className="audio-controls">
-        {Goobath.map((sample, index) => (
-          <button
-            key={index}
-            onClick={() => handlePlayPause(index)}
-            className="audio-button"
-            style={{
-              position: "absolute",
-              top: buttonPositions[index]?.top,
-              left: buttonPositions[index]?.left,
-            }}
-          >
-            {/* <span className="point-symbol"></span> */}
-
-            <span>{getFileName(sample)}</span>
-            <span>.mp3</span>
-          </button>
-        ))}
-      </div>
-
+      <AudioControls
+        Goobath={Goobath}
+        handlePlayPause={handlePlayPause}
+        audioRefs={audioRefs}
+        buttonPositions={buttonPositions}
+        getFileName={getFileName}
+      />
     </div>
   );
 }
