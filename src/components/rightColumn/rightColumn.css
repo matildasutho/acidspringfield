@@ -14,3 +14,17 @@
 .col-inner > * {
   padding-right: var(--global-padding);
 }
+
+@media screen and (max-width: 400px) {
+  .col-inner {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    /* height: 200px;
+    background-color: var(--background); */
+    display: none;
+  }
+  .col-inner > * {
+    height: 200px;
+  }
+}

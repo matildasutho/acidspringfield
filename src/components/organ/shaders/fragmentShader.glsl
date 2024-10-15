@@ -37,7 +37,7 @@ float noise(vec3 p) {
 float lines(vec2 uv, float offset) {
     // Add noise to the UV coordinates to make the lines wiggly
     float noiseValue = noise(vec3(uv * 0.2, offset));
-    uv.y += noiseValue * 0.2; // Adjust the scale of the noise perturbation
+    uv.y += noiseValue * 0.1; // Adjust the scale of the noise perturbation
 
     return smoothstep(
         0.0, 0.5 + offset * 0.5,
@@ -55,7 +55,7 @@ void main() {
   vec3 brown = vec3(0.23,0.16,0.12);
   vec3 lightGrey = vec3(1.0,1.0,1.0);
   vec3 darkGrey = vec3(0.05,0.05,0.05);
-  vec3 black = vec3(0.0,0.0,0.);
+  vec3 black = vec3(0.2403,0.2602,0.2602);
 
   float n = noise(vPosition + time);
   vec2 baseUV = rotate2D(n) * vUv * 10.0; // Adjusted scaling factor

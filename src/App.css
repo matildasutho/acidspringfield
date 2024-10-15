@@ -7,6 +7,7 @@
 
 }
 
+
 .content {
   padding-top: var(--global-padding);
   padding-bottom: var(--global-padding);
@@ -38,4 +39,11 @@ opacity: 1;
 .fade-exit.fade-exit-active {
 opacity: 0;
 transition: opacity 150ms linear;
+}
+
+@media screen and (max-width: 400px) {
+  .content {
+  padding-left: var(--global-padding);
+  padding-right: var(--global-padding);
+  }
 }

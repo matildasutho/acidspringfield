@@ -221,7 +221,8 @@ function Organ() {
         const audioData = audioAnalysers.map((analyser) => {
           const data = analyser.getFrequencyData();
           const average = data.reduce((a, b) => a + b) / data.length;
-          return (average / 256.0) * 10; // Normalize the value
+
+          return (average / 256.0) * 6; // Normalize the value
         });
 
         // Check if all audioData values are zero (no audio playing)
@@ -229,7 +230,7 @@ function Organ() {
 
         if (!isAudioPlaying) {
           // Use sine/cosine wave to create a value between 0.3 and 0.7
-          const waveValue = 0.5 + 0.2 * Math.sin(time);
+          const waveValue = 0.3 * Math.sin(time);
           audioData.fill(waveValue);
         }
 

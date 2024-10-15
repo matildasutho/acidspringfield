@@ -20,13 +20,13 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--background", "#FFF5E1E5");
     document.documentElement.style.setProperty("--active", "#9D989A");
     document.documentElement.style.setProperty("--hover", "#007be5");
-    document.documentElement.style.setProperty("--opacity", "1");
+    document.documentElement.style.setProperty("--opacity", "0.9");
     document.documentElement.style.setProperty("--banner1", "#FFF5E1");
-    document.documentElement.style.setProperty("--banner2", "#000000");
+    document.documentElement.style.setProperty("--banner2", "#201E1E");
   } else if (document.body.classList.contains("info-page")) {
     document.documentElement.style.setProperty("--overlay", "#FFF5E1");
     document.documentElement.style.setProperty("--background", "#007be5");
-    document.documentElement.style.setProperty("--active", "#000000");
+    document.documentElement.style.setProperty("--active", "#201E1E");
     document.documentElement.style.setProperty("--hover", "#DDE2D6");
     document.documentElement.style.setProperty("--opacity", "0.08");
     document.documentElement.style.setProperty("--banner1", "#DDE2D6");
@@ -34,7 +34,7 @@ function updateCSSVariables() {
   } else {
     document.documentElement.style.setProperty("--overlay", "#007be5");
     document.documentElement.style.setProperty("--background", "#FFFFFF");
-    document.documentElement.style.setProperty("--active", "#000000");
+    document.documentElement.style.setProperty("--active", "#201E1E");
     document.documentElement.style.setProperty("--hover", "#007be55E");
     document.documentElement.style.setProperty("--opacity", "0.13");
     document.documentElement.style.setProperty("--banner1", "#DDE2D6");
