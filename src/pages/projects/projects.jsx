@@ -21,7 +21,13 @@ const Projects = () => {
       try {
         const data = await fetchProjects();
         const fetchedText = data.projectCollection.items;
-        setProjects(fetchedText);
+
+        // Sort projects by date (newest to oldest)
+        const sortedProjects = fetchedText.sort(
+          (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
+        );
+
+        setProjects(sortedProjects);
       } catch (error) {
         console.error("Error fetching project content:", error);
       }

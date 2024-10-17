@@ -59,7 +59,7 @@ const projectQuery = `
           json
         }
         paragraph1
-        imageBlock1Collection(limit: 2) {
+        imageBlock1Collection(limit: 5) {
           items {
             url
             title
@@ -72,7 +72,7 @@ const projectQuery = `
           }
         }
         paragraph2
-        imageBlock2Collection(limit: 2) {
+        imageBlock2Collection(limit: 5) {
           items {
             url
             title
@@ -96,14 +96,14 @@ const projectQuery = `
           height
         }
         paragraph4
-        mediaBlockCollection(limit: 5) {
+        mediaBlockCollection(limit: 10) {
           items {
             sys {
               id
             }
             ... on ComponentImageBlockDouble {
               internalTitle
-              imageBlockCollection(limit: 2) {
+              imageBlockCollection(limit: 5) {
                 items {
                   title
                   description
@@ -154,8 +154,11 @@ const projectQuery = `
               }
               textPosition
             }
+
           }
         }
+        backgroundColour
+        projectDate
       }
     }
   }

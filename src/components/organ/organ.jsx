@@ -177,7 +177,7 @@ function Organ() {
 
         function render() {
           material.uniforms.time.value += 0.003;
-          renderer.render(scene, camera);
+          // renderer.render(scene, camera);
           controls.update();
           composer.render();
         }
@@ -222,7 +222,7 @@ function Organ() {
           const data = analyser.getFrequencyData();
           const average = data.reduce((a, b) => a + b) / data.length;
 
-          return (average / 256.0) * 6; // Normalize the value
+          return (average / 256.0) * 7; // Normalize the value
         });
 
         // Check if all audioData values are zero (no audio playing)
@@ -291,14 +291,12 @@ function Organ() {
       // Restore the original animation when paused
       const originalAnimation = button.dataset.originalAnimation;
       button.style.animation = originalAnimation;
-      button.style.color = "var(--overlay)";
     } else {
       sound.play();
       // Store the original animation in a data attribute
       button.dataset.originalAnimation = button.style.animation;
       const existingAnimation = button.style.animation;
       button.style.animation = `${existingAnimation}, active-audio 3s ease-in-out infinite`;
-      button.style.color = "white";
     }
   };
 

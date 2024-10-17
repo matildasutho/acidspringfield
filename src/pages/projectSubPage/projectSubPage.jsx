@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom";
 import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchProjects } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import LazyLoadMedia from "../../components/lazyloadmedia/LazyLoadMedia";
+import RichTextRenderer from "../../components/hyperlink/hyperlink";
 import MediaBlockCollection from "../../components/mediablockcollection/mediablockcollection";
 import Image from "../../components/Image/Image";
-import RichTextRenderer from "../../components/hyperlink/hyperlink";
 
 import "./projectSubPage.css";
 
@@ -39,7 +40,6 @@ function ProjectSubPage() {
       try {
         const data = await fetchProjects();
         const fetchedText = data.projectCollection.items;
-        // console.log("Fetched projects:", fetchedText);
         setProjects(fetchedText);
         setLinks(fetchedText.map((item) => item.projectLinks));
       } catch (error) {
@@ -95,8 +95,6 @@ function ProjectSubPage() {
     return <div>Project not found</div>;
   }
 
-  // console.log("Selected project:", project);
-
   const paragraph1HTML = convertToHTML(project.paragraph1);
   const paragraph2HTML = project.paragraph2
     ? convertToHTML(project.paragraph2)
@@ -126,17 +124,17 @@ function ProjectSubPage() {
     </>
   );
 
-  // console.log(
-  //   "MediaBlockCollection items:",
-  //   project.mediaBlockCollection?.items
-  // );
-
   return (
     <div className="flex-row">
       <div className="flex-col">
         <div className="content">
           <div className="hero-image">
-            <img src={project.heroImage.url} alt={project.heroImage.title} />
+            <LazyLoadMedia
+              src={project.heroImage.url}
+              type="image"
+              alt={project.heroImage.title}
+              className="hero-image"
+            />
           </div>
           <span className="tiny-txt">
             <span>PROJECT</span>{" "}
@@ -154,11 +152,12 @@ function ProjectSubPage() {
             <div className="imgBlock1">
               {project.imageBlock1Collection &&
                 project.imageBlock1Collection.items.map((image, imgIndex) => (
-                  <Image
+                  <LazyLoadMedia
                     key={imgIndex}
-                    setImage={image.url}
-                    zoomedImage={image.url}
-                    imageTitle={image.title}
+                    src={image.url}
+                    type="image"
+                    alt={image.title}
+                    className="image"
                   />
                 ))}
             </div>
@@ -171,12 +170,13 @@ function ProjectSubPage() {
           ref={fruitWrapRef}
           style={{
             height: "100%",
+            backgroundColor: project.backgroundColour || "#EFF3E8", // Set background color
           }}
         >
           <br />
           {paragraph2HTML && (
             <div
-              className="smll-txt p2"
+              className="p2"
               dangerouslySetInnerHTML={{ __html: paragraph2HTML }}
             />
           )}
@@ -186,15 +186,17 @@ function ProjectSubPage() {
               <div className="imgBlock2">
                 {project.imageBlock2Collection &&
                   project.imageBlock2Collection.items.map((image, imgIndex) => (
-                    <Image
+                    <LazyLoadMedia
                       key={imgIndex}
-                      setImage={image.url}
-                      imageTitle={image.title}
+                      src={image.url}
+                      type="image"
+                      alt={image.title}
+                      className="image"
                     />
                   ))}
               </div>
               <span
-                className="smll-txt p3"
+                className="p3"
                 dangerouslySetInnerHTML={{ __html: paragraph3HTML }}
               />
             </span>
@@ -202,19 +204,32 @@ function ProjectSubPage() {
           <br />
           {project.media1 && (
             <div className="media-image">
-              <img src={project.media1.url} alt={project.media1.title} />
+              {project.media1.url.match(/\.(jpeg|jpg|gif|png)$/) ? (
+                <LazyLoadMedia
+                  src={project.media1.url}
+                  type="image"
+                  alt={project.media1.title}
+                  className="media-image"
+                />
+              ) : project.media1.url.match(/\.(mp4|webm|ogg|mov|m4v)$/) ? (
+                <LazyLoadMedia
+                  src={project.media1.url}
+                  type="video"
+                  className="media-video"
+                />
+              ) : null}
             </div>
           )}
           <br />
           {paragraph4HTML && (
             <div
-              className="smll-txt p4"
+              className="p4"
               dangerouslySetInnerHTML={{ __html: paragraph4HTML }}
             />
           )}
           <br />
           {project.mediaBlockCollection && (
-            <MediaBlockCollection items={project.mediaBlockCollection?.items} />
+            <MediaBlockCollection items={project.mediaBlockCollection.items} />
           )}
           <br />
           <br />

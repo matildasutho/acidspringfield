@@ -21,6 +21,7 @@ const AudioControls = ({
             left: buttonPositions[index]?.left,
           }}
         >
+          <span className="point-symbol"></span>
           <span>{getFileName(sample)}</span>
           <span>.mp3</span>
         </button>

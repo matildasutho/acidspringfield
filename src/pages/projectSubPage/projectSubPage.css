@@ -17,7 +17,6 @@
 .media-image {
   width: 100%;
   height: fit-content;
-
 }
 .media-image img {
   min-width: 100%;
@@ -31,51 +30,64 @@
   margin-left: auto;
 }
 .p1 {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-  width: 50%;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  width: 53%;
   margin-left: 4rem;
 }
 .imgBlock1 {
   box-sizing: border-box;
-  width: fit-content;
-  height: fit-content;
+  width: 480px;
+  height: auto;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   margin-left: auto;
 }
-
+.imgBlock1 > * {
+  min-width: 50%;
+  max-width: 100%;
+}
 .p2 {
-  width: 40%;
+  width: 50%;
   margin-left: 6rem;
 }
-.p4 {
-  width: 40%;
-  margin-right: 6rem;
-}
+
 .img-txt-block {
   display: flex;
   flex-direction: row;
   gap: var(--global-padding);
-
 }
 
-.p3 {
-  width: 40%;
-  padding-left: 10%;
-  margin-left: auto;
+.p4 {
+  width: 50%;
+  margin-right: 6rem;
 }
 .imgBlock2 {
   box-sizing: border-box;
-  width: fit-content;
-  height: fit-content;
+  width: 480px;
+  height: auto;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   margin-right: auto;
 }
+.imgBlock2 > * {
+  min-width: 50%;
+  max-width: 100%;
+}
+.p3 {
+  width: auto;
+  max-width: 50%;
+  padding-left: 0%;
+  margin-left: auto;
+}
 .fruit-wrap {
   height: 400vh;
+  padding-bottom: 2rem;
 }
 
+.fruit-wrap > * {
+  padding-top: var(--global-padding);
+  padding-bottom: var(--global-padding);
+}

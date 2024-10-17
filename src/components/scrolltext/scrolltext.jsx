@@ -19,7 +19,23 @@ const ScrollText = () => {
 
         if (fetchedText.length > 0 && fetchedText[0].textContent) {
           const scrollContent = documentToReactComponents(
-            fetchedText[0].textContent.json
+            fetchedText[0].textContent.json,
+            {
+              renderNode: {
+                "embedded-asset-block": (node) => {
+                  // Custom rendering for embedded assets if needed
+                },
+                hyperlink: (node, children) => (
+                  <a
+                    href={node.data.uri}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {children}
+                  </a>
+                ),
+              },
+            }
           );
           setMarqueeContent((prevContent) => [...prevContent, scrollContent]);
           scrollRef.current = scrollContent; // Update the ref with the scroll content

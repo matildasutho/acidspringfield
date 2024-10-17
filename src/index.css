@@ -17,6 +17,7 @@
   --banner2: #201E1E;
   --line-weight: 1px;
   --global-padding: 1rem;
+    --pointer-events: none;
   --opacity: 0.7;
 }
 ::-webkit-scrollbar {
@@ -104,9 +105,23 @@ a:hover {
   font-weight: 200;
   font-style: normal;
 }
+.smll-txt p {
+  font-size: 0.6rem;
+  line-height: 0.7rem;
+  color: var(--overlay);
+  font-weight: 200;
+  font-style: normal;
+}
+.smll-txt h5 {
+  font-size: 0.6rem;
+  line-height: 1.8rem;
+  color: var(--overlay);
+  font-weight: 200;
+  font-style: normal;
+}
 .tiny-txt {
-  font-size: 0.7rem;
-  line-height: 1rem;
+  font-size: 0.5rem;
+  line-height: 0.7rem;
   font-weight: 200;
   text-transform: uppercase;
 }

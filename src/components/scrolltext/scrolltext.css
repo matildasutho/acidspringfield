@@ -4,7 +4,7 @@
     bottom: 0;
     left: 0;
     z-index: 150;
-    height: 2rem;
+    height: 1.2rem;
     width: 100vw;
     overflow: hidden;
     background-color: var(--banner1); /* Adjust background color as needed */
@@ -20,9 +20,9 @@
   
   .marquee-content p {
     display: inline-block;
-    color: "#007BE5";
-    font-size: 2rem;
-    line-height: 2rem;
+    color: #007BE5;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
     font-weight: 100;
     /* padding-left: 100; */
     margin: 0;
@@ -31,7 +31,8 @@
   }
   .marquee-content p a {
     text-decoration: none;
-    color: "#007be5";
+    color: var(--banner2);
+
   }
   @keyframes marquee {
     0% {

@@ -9,7 +9,7 @@
   top: 0;
   border-left: var(--line-weight) solid var(--overlay);
   overflow-wrap: break-word;
-
+  pointer-events: var(--pointer-events);
 }
 .col-inner > * {
   padding-right: var(--global-padding);

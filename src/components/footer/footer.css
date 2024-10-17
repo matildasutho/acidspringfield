@@ -1,7 +1,7 @@
 .copy-right {
   text-align: right;
   position: fixed;
-  bottom: 3rem;
+  bottom: calc(var(--global-padding) * 2);
   right: var(--global-padding);
   font-size: 0.5rem;
   line-height: 0.7rem;
