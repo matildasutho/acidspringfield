@@ -1,35 +1,102 @@
 .media-block-collection {
-  /* background-color: red; */
-  height: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.media-block {
+  margin-bottom: 2rem;
+}
+
+.video-block .video {
+  height: auto;
+}
+.video-player {
+  position: relative;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+}
+
+.video-controls button {
+  color: var(--background);
+  background-color: var(--overlay), 0;
+  border: none;
+  cursor: pointer;
+  font-family: "neue-haas-grotesk-text", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem;
+  text-align: center;
+  width: 250px;
+  height: 150px;
+  position: relative;
+  left: calc(50% - 125px);
+  top: calc(50% - 75px);
+  opacity: 0.3;
+}
+
+.video-controls button:hover {
+  color: var(--overlay);
+  opacity: 1;
+  transition: 0.2s;
+}
+.video-reel {
+  width: 277px;
+}
+
+.video-full {
   width: 100%;
 }
-.media-block-collection > * {
-  padding-top: var(--global-padding);
-  padding-bottom: var(--global-padding);
-}
+
+
 .video-text {
   width: 50%;
 }
-.text-block {
-  width: 50%;
+
+.image-block-single {
+  position: relative;
+  overflow: hidden;
 }
-.double-image {
-  width: 180px;
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
-.single-image {
-  width: 480px;
+
+.image {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
+
 .image-block-double {
-  box-sizing: border-box;
-  width: 480px;
-  height: auto;
   display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  margin-right: auto;
+  gap: var(--global-padding);
 }
-.double-image img {
-  min-width: 50%;
-  max-width: 100%;
-  background-color: red;
+
+.double-image {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-block-double .image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image-block-single p {
+  margin-top: 1rem;
 }

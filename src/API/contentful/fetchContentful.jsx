@@ -59,44 +59,7 @@ const projectQuery = `
           json
         }
         paragraph1
-        imageBlock1Collection(limit: 5) {
-          items {
-            url
-            title
-            description
-            contentType
-            fileName
-            size
-            width
-            height
-          }
-        }
-        paragraph2
-        imageBlock2Collection(limit: 5) {
-          items {
-            url
-            title
-            description
-            contentType
-            fileName
-            size
-            width
-            height
-          }
-        }
-        paragraph3
-        media1 {
-          url
-          title
-          description
-          contentType
-          fileName
-          size
-          width
-          height
-        }
-        paragraph4
-        mediaBlockCollection(limit: 10) {
+        mediaBlockCollection(limit: 25) {
           items {
             sys {
               id
@@ -116,6 +79,7 @@ const projectQuery = `
                 }
               }
               layout
+              imageAlignment
             }
             ... on ComponentImageBlockSingle {
               internalTitle
@@ -129,13 +93,15 @@ const projectQuery = `
                 width
                 height
               }
-              layout
+              imageWidth
+              imageOrientation
             }
             ... on ComponentText {
               textContent {
                 json
               }
-              layout
+              textWidth
+              textAlignment
             }
             ... on ComponentVideoTextBlock {
               internalTitle
@@ -153,10 +119,13 @@ const projectQuery = `
                 json
               }
               textPosition
+              reelFormat
             }
-
+            
           }
+
         }
+      
         backgroundColour
         projectDate
       }
