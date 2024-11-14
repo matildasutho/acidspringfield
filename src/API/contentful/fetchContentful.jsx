@@ -59,7 +59,7 @@ const projectQuery = `
           json
         }
         paragraph1
-        mediaBlockCollection(limit: 25) {
+        mediaBlockCollection(limit: 20) {
           items {
             sys {
               id
@@ -81,6 +81,21 @@ const projectQuery = `
               layout
               imageAlignment
             }
+              ... on ComponentProjectMediaGallery {
+              internalTitle
+              galleryContentCollection(limit: 6) {
+                items {
+                  title
+                  description
+                  contentType
+                  fileName
+                  size
+                  url
+                  width
+                  height
+                }
+              }
+            }
             ... on ComponentImageBlockSingle {
               internalTitle
               image {
@@ -95,6 +110,7 @@ const projectQuery = `
               }
               imageWidth
               imageOrientation
+              imageAlignment
             }
             ... on ComponentText {
               textContent {
@@ -119,7 +135,7 @@ const projectQuery = `
                 json
               }
               textPosition
-              reelFormat
+              reelFormat  
             }
             
           }

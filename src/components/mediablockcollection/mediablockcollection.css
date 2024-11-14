@@ -1,12 +1,9 @@
 .media-block-collection {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
 }
 
-.media-block {
-  margin-bottom: 2rem;
-}
 
 .video-block .video {
   height: auto;
@@ -57,7 +54,7 @@
 
 
 .video-text {
-  width: 50%;
+  width: calc((100vw / 12) * 4);
 }
 
 .image-block-single {
@@ -77,6 +74,7 @@
   min-width: 100%;
   object-fit: cover;
   object-position: center;
+
 }
 
 .image-block-double {
@@ -97,6 +95,26 @@
   object-position: center;
 }
 
-.image-block-single p {
-  margin-top: 1rem;
+
+.media-gallery {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.gallery-container {
+  display: flex;
+  gap: 1rem;
+  background-color: red;
+}
+
+.gallery-item {
+  display: inline-block;
+  width: auto;
+  height: auto;
+}
+
+.gallery-media {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }

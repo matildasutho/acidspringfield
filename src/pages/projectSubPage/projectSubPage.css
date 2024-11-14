@@ -14,16 +14,16 @@
   height: 100%;
   object-fit: cover;
 }
-.media-image {
+/* .media-image {
   width: 100%;
   height: fit-content;
-}
-.media-image img {
+} */
+/* .media-image img {
   min-width: 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 .project-summary {
   text-align: right;
   width: calc(100vw / 12 * 6);
@@ -35,7 +35,7 @@
   width: 53%;
   margin-left: 4rem;
 }
-.imgBlock1 {
+/* .imgBlock1 {
   box-sizing: border-box;
   width: 480px;
   height: auto;
@@ -57,9 +57,9 @@
   display: flex;
   flex-direction: row;
   gap: var(--global-padding);
-}
+} */
 
-.p4 {
+/* .p4 {
   width: 50%;
   margin-right: 6rem;
 }
@@ -81,7 +81,7 @@
   max-width: 50%;
   padding-left: 0%;
   margin-left: auto;
-}
+} */
 .fruit-wrap {
   height: 400vh;
   padding-bottom: 2rem;
