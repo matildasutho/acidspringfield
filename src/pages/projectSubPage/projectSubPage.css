@@ -32,6 +32,5 @@
 }
 
 .fruit-wrap > * {
-  padding-top: var(--global-padding);
   padding-bottom: 6rem;
 }

@@ -13,7 +13,12 @@ const MediaBlockCollection = ({ items }) => {
 
         if (item.__typename === "ComponentVideoTextBlock") {
           const textStyle = {
-            marginLeft: item.textPosition ? "auto" : "6rem",
+            marginLeft:
+              item.textPosition === true
+                ? "0"
+                : item.textPosition === false
+                ? "auto"
+                : "6rem",
           };
 
           if (item.reelFormat) {
@@ -43,7 +48,12 @@ const MediaBlockCollection = ({ items }) => {
           }
         } else if (item.__typename === "ComponentText") {
           const textStyle = {
-            marginLeft: item.textAlignment ? "var(--global-padding)" : "auto",
+            marginLeft:
+              item.textAlignment === true
+                ? "0"
+                : item.textAlignment === false
+                ? "auto"
+                : "6rem",
             width: item.textWidth ? "100%" : "50%",
           };
 
@@ -60,8 +70,14 @@ const MediaBlockCollection = ({ items }) => {
           // Handle ComponentImageBlockDouble
           const doubleImageStyle = {
             flexDirection: item.layout ? "row" : "column",
-            width: "468px",
-            height: item.layout ? "323px" : "600px",
+            width: item.layout ? "480px" : "323px",
+            height: item.layout ? "323px" : "480px",
+            marginLeft:
+              item.imageAlignment === true
+                ? "0"
+                : item.imageAlignment === false
+                ? "auto"
+                : "6rem",
           };
 
           return (
@@ -89,8 +105,18 @@ const MediaBlockCollection = ({ items }) => {
             height: "auto",
           };
           const halfWidth = {
-            width: item.imageOrientation ? "480px" : "323px",
-            height: item.imageOrientation ? "240px" : "480px",
+            width:
+              item.imageOrientation === true
+                ? "480px"
+                : item.imageOrientation === false
+                ? "323px"
+                : "calc(100vw / 12 * 4)",
+            height:
+              item.imageOrientation === true
+                ? "323px"
+                : item.imageOrientation === false
+                ? "480px"
+                : "auto",
             marginLeft:
               item.imageAlignment === true
                 ? "0"
@@ -113,14 +139,13 @@ const MediaBlockCollection = ({ items }) => {
                   className="image"
                 />
               </div>
-              <p>{item.image.description}</p>
             </div>
           );
         } else if (item.__typename === "ComponentProjectMediaGallery") {
           // Handle ComponentProjectMediaGallery
           const galleryStyle = {
             width: item.galleryWidth ? "calc(100vw / 12 * 4)" : "100%",
-            marginleft: item.galleryAlignment ? "0" : "auto",
+            marginLeft: item.galleryAlignment ? "0" : "auto",
           };
 
           return (
