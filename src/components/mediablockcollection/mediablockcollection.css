@@ -48,6 +48,7 @@
   display: flex;
   gap: var(--global-padding);
   align-items: end;
+  margin-left: 6rem;
 }
 
 .video-full {
@@ -112,6 +113,7 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   gap: 0.5em;
