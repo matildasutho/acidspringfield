@@ -5,7 +5,6 @@
   font-size: 1.8rem;
   line-height: 2rem;
   font-weight: 400;
-
 }
 .all-caps {
   text-transform: uppercase;
@@ -14,7 +13,6 @@
   font-size: 1.2rem;
   line-height: 1.5rem;
   width: 70%;
-
 }
 .info-hero {
   mix-blend-mode: lighten;
@@ -51,7 +49,6 @@
 
 .hover-target:hover .hover-image {
   display: block;
-
 }
 .hover-target:hover {
   background-color: var(--active);

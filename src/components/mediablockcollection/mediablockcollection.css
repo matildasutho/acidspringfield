@@ -45,7 +45,9 @@
 }
 
 .video-reel {
-  width: 277px;
+  display: flex;
+  gap: var(--global-padding);
+  align-items: end;
 }
 
 .video-full {
@@ -62,8 +64,8 @@
 }
 
 .image-container {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   position: relative;
 }
 
@@ -78,6 +80,12 @@
 .image-block-double {
   display: flex;
   gap: var(--global-padding);
+  width: 100%;
+}
+
+.text-container {
+  text-align: left;
+  width: auto;
 }
 
 .double-image {
@@ -107,7 +115,6 @@
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   gap: 0.5em;
-
 }
 
 .gallery-item {

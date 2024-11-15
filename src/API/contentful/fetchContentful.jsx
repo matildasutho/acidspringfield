@@ -82,6 +82,9 @@ const projectQuery = `
               }
               layout
               imageAlignment
+              textBlock {
+              json
+              }
             }
               ... on ComponentProjectMediaGallery {
               internalTitle
@@ -115,6 +118,9 @@ const projectQuery = `
               imageWidth
               imageOrientation
               imageAlignment
+              textBlock {
+              json
+              }
             }
             ... on ComponentText {
               textContent {
@@ -161,6 +167,9 @@ const infoQuery = `
         paragraph1
         rightColumn {
           json
+        }
+        infoLinks {
+        json
         }
         heroImage {
           title

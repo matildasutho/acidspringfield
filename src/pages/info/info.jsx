@@ -113,6 +113,17 @@ const Info = () => {
     display: hoverImg ? "block" : "none",
   };
 
+  const rightColumnContent = (
+    <>
+      {infoEntry.rightColumn && infoEntry.rightColumn.json && (
+        <div>{documentToReactComponents(infoEntry.rightColumn.json)}</div>
+      )}
+      {infoEntry.infoLinks && infoEntry.infoLinks.json && (
+        <RichTextRenderer document={infoEntry.infoLinks.json} />
+      )}
+    </>
+  );
+
   return (
     <div className="flex-row fade-in" onMouseMove={handleImageMouseMove}>
       {info.map((item, index) => (
@@ -144,11 +155,9 @@ const Info = () => {
           <br />
         </div>
       ))}
-      {infoEntry.rightColumn && infoEntry.rightColumn.json && (
-        <RightColumn
-          text={documentToReactComponents(infoEntry.rightColumn.json)}
-        />
-      )}
+
+      <RightColumn text={rightColumnContent} />
+
       {hoverImg && (
         <img
           src={hoverImg === "benImage" ? benImage : ericaImage}

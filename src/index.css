@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 :root {
   font-family: "neue-haas-grotesk-display", sans-serif;
   font-weight: 600;
@@ -8,16 +11,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --overlay: #9D989A;
-  --background: #FFF5E1;
-  --active: #9D989A;
+  --overlay: #9d989a;
+  --background: #fff5e1;
+  --active: #9d989a;
   --hover: #007be5;
-  --caption: #C4C4C4;
-  --banner1: #FFF5E1;
-  --banner2: #201E1E;
+  --caption: #c4c4c4;
+  --banner1: #fff5e1;
+  --banner2: #201e1e;
   --line-weight: 1px;
   --global-padding: 1rem;
-    --pointer-events: none;
+  --pointer-events: none;
   --opacity: 0.7;
 }
 ::-webkit-scrollbar {
@@ -160,7 +163,6 @@ video {
   flex-direction: column;
   height: fit-content;
   gap: var(--global-padding);
-  
 }
 .flex-row {
   display: flex;
