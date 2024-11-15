@@ -4,14 +4,14 @@ import LazyLoadMedia from "../lazyloadmedia/LazyLoadMedia"; // Adjust the import
 import "./mediablockcollection.css";
 
 const MediaBlockCollection = ({ items }) => {
-  console.log("MediaBlockCollection items:", items);
+  // console.log("MediaBlockCollection items:", items);
 
   return (
     <div className="media-block-collection">
       {items.map((item, index) => {
-        console.log("Rendering item:", item);
+        // console.log("Rendering item:", item);
 
-        if (item.video) {
+        if (item.__typename === "ComponentVideoTextBlock") {
           const textStyle = {
             marginLeft: item.textPosition ? "auto" : "6rem",
           };
@@ -41,7 +41,7 @@ const MediaBlockCollection = ({ items }) => {
               </div>
             );
           }
-        } else if (item.textContent) {
+        } else if (item.__typename === "ComponentText") {
           const textStyle = {
             marginLeft: item.textAlignment ? "var(--global-padding)" : "auto",
             width: item.textWidth ? "100%" : "50%",
@@ -56,13 +56,12 @@ const MediaBlockCollection = ({ items }) => {
               {documentToReactComponents(item.textContent.json)}
             </div>
           );
-        } else if (item.imageBlockCollection) {
+        } else if (item.__typename === "ComponentImageBlockDouble") {
           // Handle ComponentImageBlockDouble
           const doubleImageStyle = {
             flexDirection: item.layout ? "row" : "column",
             width: "468px",
             height: item.layout ? "323px" : "600px",
-            marginLeft: item.imageAlignment ? "0" : "auto",
           };
 
           return (
@@ -83,7 +82,7 @@ const MediaBlockCollection = ({ items }) => {
               ))}
             </div>
           );
-        } else if (item.image) {
+        } else if (item.__typename === "ComponentImageBlockSingle") {
           // Handle ComponentImageBlockSingle
           const fullWidth = {
             width: "100%",
@@ -91,7 +90,7 @@ const MediaBlockCollection = ({ items }) => {
           };
           const halfWidth = {
             width: item.imageOrientation ? "480px" : "323px",
-            height: item.imageOrientation ? "323px" : "480px",
+            height: item.imageOrientation ? "240px" : "480px",
             marginLeft:
               item.imageAlignment === true
                 ? "0"
@@ -117,41 +116,35 @@ const MediaBlockCollection = ({ items }) => {
               <p>{item.image.description}</p>
             </div>
           );
-        } else if (item.componentProjectMediaGallery) {
+        } else if (item.__typename === "ComponentProjectMediaGallery") {
           // Handle ComponentProjectMediaGallery
-          console.log(
-            "Rendering componentProjectMediaGallery:",
-            item.componentProjectMediaGallery
-          );
-          console.log(
-            "Gallery items:",
-            item.componentProjectMediaGallery.galleryContentCollection.items
-          );
+          const galleryStyle = {
+            width: item.galleryWidth ? "calc(100vw / 12 * 4)" : "100%",
+            marginleft: item.galleryAlignment ? "0" : "auto",
+          };
 
           return (
-            <div key={index} className="media-block media-gallery">
+            <div
+              key={index}
+              className="media-block media-gallery"
+              style={galleryStyle}
+            >
               <div className="gallery-container">
-                {item.componentProjectMediaGallery.galleryContentCollection.items.map(
-                  (media, mediaIndex) => {
-                    console.log("Rendering media item:", media);
-                    console.log("Media URL:", media.url);
-                    return (
-                      <div key={mediaIndex} className="gallery-item">
-                        <LazyLoadMedia
-                          src={media.url}
-                          type="image"
-                          alt={media.title}
-                          className="gallery-media"
-                        />
-                      </div>
-                    );
-                  }
+                {item.galleryContentCollection.items.map(
+                  (media, mediaIndex) => (
+                    <div key={mediaIndex} className="gallery-item">
+                      <LazyLoadMedia
+                        src={media.url}
+                        type="image"
+                        alt={media.title}
+                        className="gallery-media"
+                      />
+                    </div>
+                  )
                 )}
               </div>
             </div>
           );
-        } else {
-          return null;
         }
       })}
     </div>
@@ -178,7 +171,7 @@ const VideoPlayer = ({ src }) => {
       <video ref={videoRef} className="video" src={src} />
       <div className="video-controls">
         <button onClick={handlePlayPause}>
-          {isPlaying ? "PAUSE" : "PLAY"}
+          {isPlaying ? "Pause" : "Play"}
         </button>
       </div>
     </div>

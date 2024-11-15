@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const LazyLoadMedia = ({ src, type, alt, className }) => {
+const LazyLoadMedia = ({ src, type, alt, className, style }) => {
   const mediaRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -36,11 +36,17 @@ const LazyLoadMedia = ({ src, type, alt, className }) => {
         alt={alt}
         className={`${className} ${isLoaded ? "fade-in" : ""}`}
         loading="lazy"
+        style={style}
       />
     );
   } else if (type === "video") {
     return isLoaded ? (
-      <video ref={mediaRef} controls className={`${className} fade-in`}>
+      <video
+        ref={mediaRef}
+        controls
+        className={`${className} fade-in`}
+        style={style}
+      >
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.
       </video>

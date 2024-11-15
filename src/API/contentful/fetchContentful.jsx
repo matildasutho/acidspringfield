@@ -51,6 +51,7 @@ const projectQuery = `
           width
           height
         }
+        heroImagePosition
         projectSummary
         rightColumn {
           json
@@ -64,6 +65,7 @@ const projectQuery = `
             sys {
               id
             }
+              __typename
             ... on ComponentImageBlockDouble {
               internalTitle
               imageBlockCollection(limit: 5) {
@@ -95,6 +97,8 @@ const projectQuery = `
                   height
                 }
               }
+              galleryWidth
+              galleryAlignment
             }
             ... on ComponentImageBlockSingle {
               internalTitle

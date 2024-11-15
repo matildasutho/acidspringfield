@@ -134,6 +134,14 @@ function ProjectSubPage() {
               type="image"
               alt={project.heroImage.title}
               className="hero-image"
+              style={{
+                objectPosition:
+                  project.heroImagePosition === true
+                    ? "top"
+                    : project.heroImagePosition === false
+                    ? "bottom"
+                    : "center",
+              }}
             />
           </div>
           <span className="tiny-txt">
@@ -149,19 +157,6 @@ function ProjectSubPage() {
               className="p1"
               dangerouslySetInnerHTML={{ __html: paragraph1HTML }}
             />
-            <div className="imgBlock1">
-              {project.imageBlock1Collection &&
-                project.imageBlock1Collection.items.map((image, imgIndex) => (
-                  <LazyLoadMedia
-                    key={imgIndex}
-                    src={image.url}
-                    type="image"
-                    alt={image.title}
-                    className="image"
-                  />
-                ))}
-            </div>
-            <br />
           </div>
         </div>
 
@@ -173,66 +168,9 @@ function ProjectSubPage() {
             backgroundColor: project.backgroundColour || "#EFF3E8", // Set background color
           }}
         >
-          <br />
-          {paragraph2HTML && (
-            <div
-              className="p2"
-              dangerouslySetInnerHTML={{ __html: paragraph2HTML }}
-            />
-          )}
-          <br />
-          {paragraph3HTML && (
-            <span className="img-txt-block">
-              <div className="imgBlock2">
-                {project.imageBlock2Collection &&
-                  project.imageBlock2Collection.items.map((image, imgIndex) => (
-                    <LazyLoadMedia
-                      key={imgIndex}
-                      src={image.url}
-                      type="image"
-                      alt={image.title}
-                      className="image"
-                    />
-                  ))}
-              </div>
-              <span
-                className="p3"
-                dangerouslySetInnerHTML={{ __html: paragraph3HTML }}
-              />
-            </span>
-          )}
-          <br />
-          {project.media1 && (
-            <div className="media-image">
-              {project.media1.url.match(/\.(jpeg|jpg|gif|png)$/) ? (
-                <LazyLoadMedia
-                  src={project.media1.url}
-                  type="image"
-                  alt={project.media1.title}
-                  className="media-image"
-                />
-              ) : project.media1.url.match(/\.(mp4|webm|ogg|mov|m4v)$/) ? (
-                <LazyLoadMedia
-                  src={project.media1.url}
-                  type="video"
-                  className="media-video"
-                />
-              ) : null}
-            </div>
-          )}
-          <br />
-          {paragraph4HTML && (
-            <div
-              className="p4"
-              dangerouslySetInnerHTML={{ __html: paragraph4HTML }}
-            />
-          )}
-          <br />
           {project.mediaBlockCollection && (
             <MediaBlockCollection items={project.mediaBlockCollection.items} />
           )}
-          <br />
-          <br />
         </div>
       </div>
       <RightColumn text={rightColumnContent}></RightColumn>
