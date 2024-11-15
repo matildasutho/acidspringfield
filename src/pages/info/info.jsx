@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchInfo } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import RichTextRenderer from "../../components/hyperlink/hyperlink";
 
 import "./info.css";
 
