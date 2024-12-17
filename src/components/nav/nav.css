@@ -1,3 +1,9 @@
+.sidebar-col {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
 .nav-inner {
   width: calc(100vw / 12 * 2);
   border-right: 1px solid var(--overlay);
@@ -17,10 +23,10 @@
 .nav-inner .hover-content {
   display: none;
   position: absolute;
+  z-index: 100;
 }
 .nav-inner .nav-item {
   position: relative;
-
 }
 .nav-inner a:hover + .hover-content,
 .nav-inner .hover-content:hover {
@@ -37,7 +43,7 @@
 .hover-content ul {
   list-style-type: none;
   list-style-position: inside;
-  padding:  4px 0;
+  padding: 4px 0;
   margin-left: -9.2px;
 }
 .nav-inner ul li {
@@ -68,4 +74,54 @@
 }
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .sidebar-col {
+    flex-direction: row;
+    height: fit-content;
+    justify-content: center;
+    margin-top: 80px;
+  }
+  .nav-inner-mobile {
+    width: 80vw;
+    height: 5vh;
+    overflow: visible;
+    border: none;
+    padding: var(--global-padding);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    left: 0;
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+  .hover-content-mobile {
+    position: absolute;
+    top: 5vh;
+    background-color: red;
+  }
+
+  .hover-content ul {
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 4px 0;
+    margin-left: -5px;
+  }
+  .nav-inner ul li {
+    padding-top: 0.5em;
+  }
+  .logo-mobile {
+    width: 100px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .nav-inner-mobile {
+    width: 90vw;
+  }
 }

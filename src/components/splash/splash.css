@@ -30,7 +30,7 @@
   /* background-color: yellow; */
   cursor: pointer;
   transform: skew(0deg, 0deg);
-  transition: filter .25s ease-out;
+  transition: filter 0.25s ease-out;
   animation: float 5s infinite ease-in-out;
 }
 .enter-btn:hover {
@@ -48,7 +48,6 @@
   display: flex;
   align-items: end;
   padding-top: var(--global-padding);
-  
 }
 @keyframes float {
   0% {
@@ -58,7 +57,7 @@
     transform: skew(0.5deg, -0.5deg) translate3d(0, -5px, 0);
   }
   100% {
-    transform: skew(0,0) translate3d(0, 0, 0);
+    transform: skew(0, 0) translate3d(0, 0, 0);
   }
 }
 
@@ -66,5 +65,7 @@
   .intro-txt {
     width: 100vw;
     padding: 0 var(--global-padding);
+    font-size: 1.2rem;
+    line-height: 1.2rem;
   }
 }

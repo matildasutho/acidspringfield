@@ -25,7 +25,6 @@
   flex-direction: row;
   justify-content: baseline;
   align-items: baseline;
-
   padding-bottom: 8rem;
 }
 .info-header > * {
@@ -64,5 +63,38 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .info-wrapper {
+    margin-top: 5vh;
+  }
+  .info-header {
+    flex-direction: column-reverse;
+    padding-bottom: 4rem;
+  }
+  .info-hero {
+    mix-blend-mode: lighten;
+    width: calc(100vw / 12 * 8);
+    opacity: 0.8;
+    mix-blend-mode: lighten;
+  }
+  .info-summary {
+    width: 90%;
+    margin-left: auto;
+    margin-bottom: 2em;
+    text-align: right;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+  }
+  .all-caps {
+    text-transform: uppercase;
+  }
+  .p5 {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    width: 100%;
+    padding-bottom: 15vh;
   }
 }

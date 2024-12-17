@@ -128,7 +128,7 @@ const Info = () => {
   return (
     <div className="flex-row fade-in" onMouseMove={handleImageMouseMove}>
       {info.map((item, index) => (
-        <div key={index} className="content flex-col">
+        <div key={index} className="content flex-col info-wrapper">
           <div className="info-header">
             <div className="info-hero fade-in">
               <img
@@ -157,7 +157,7 @@ const Info = () => {
         </div>
       ))}
 
-      <RightColumn text={rightColumnContent} />
+      <RightColumn text={rightColumnContent} bgColor={"#FFB6C7"} />
 
       {hoverImg && (
         <img

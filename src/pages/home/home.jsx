@@ -10,6 +10,15 @@ const Home = ({ onAudioReady }) => {
   const [fadeOut, setFadeOut] = useState(false);
   const audiotrigger = useRef(null);
   const audioContextRef = useRef(null);
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 900px)").matches
+  );
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 900px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  }, []);
 
   useEffect(() => {
     document.body.classList.add("home-page");
@@ -58,7 +67,7 @@ const Home = ({ onAudioReady }) => {
           <div className="cloud-BG"></div>
         </div>
       </div>
-      <RightColumn text="" />
+      {matches && <RightColumn text="" />}
     </>
   );
 };

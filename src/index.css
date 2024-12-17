@@ -22,9 +22,15 @@
   --global-padding: 1rem;
   --pointer-events: none;
   --opacity: 0.7;
+  --right-col-overlay: #6e6b6c;
 }
 ::-webkit-scrollbar {
   display: none;
+}
+@media screen and (max-width: 768px) {
+  :root {
+    --global-padding: 0.5rem;
+  }
 }
 body {
   margin: 0;
@@ -168,12 +174,6 @@ video {
   display: flex;
   flex-direction: row;
   align-items: baseline;
-}
-.sidebar-col {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  justify-content: center;
 }
 
 .fade-in {

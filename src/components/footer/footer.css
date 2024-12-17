@@ -9,3 +9,11 @@
   text-transform: uppercase;
   color: var(--overlay);
 }
+@media screen and (max-width: 900px) {
+  .copy-right {
+    position: fixed;
+    padding-top: 10em;
+    right: var(--global-padding);
+    bottom: calc(var(--global-padding) + 10vh);
+  }
+}

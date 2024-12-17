@@ -1,44 +1,52 @@
-
 .marquee-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 150;
-    height: 1.2rem;
-    width: 100vw;
-    overflow: hidden;
-    background-color: var(--banner1); /* Adjust background color as needed */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  height: 1.2rem;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--banner1); /* Adjust background color as needed */
+}
 
+.marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  text-transform: uppercase;
+}
+
+.marquee-content p {
+  display: inline-block;
+  color: #007be5;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  font-weight: 100;
+  /* padding-left: 100; */
+  margin: 0;
+  padding-right: 0.5rem; /* Adjust spacing between items */
+  color: var(--banner2);
+}
+.marquee-content p a {
+  text-decoration: none;
+  color: var(--banner2);
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
   }
-  
-  .marquee {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
-    text-transform: uppercase;
+  100% {
+    transform: translateX(-200%);
   }
-  
-  .marquee-content p {
-    display: inline-block;
-    color: #007BE5;
-    font-size: 1.2rem;
-    line-height: 1.2rem;
-    font-weight: 100;
-    /* padding-left: 100; */
-    margin: 0;
-    padding-right: 0.5rem; /* Adjust spacing between items */
-    color: var(--banner2);
+}
+
+@media screen and (max-width: 900px) {
+  .marquee-container {
+    height: 5vh;
+    /* box-shadow: -2px 0 15px rgba(0, 0, 0, 0.2); */
   }
   .marquee-content p a {
-    text-decoration: none;
-    color: var(--banner2);
-
+    font-size: 5vh;
+    line-height: 5vh;
   }
-  @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-200%);
-    }
-  }
+}

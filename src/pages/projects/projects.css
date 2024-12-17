@@ -22,3 +22,11 @@
   overflow: visible;
   /* border-left: var(--line-weight) solid var(--blue); */
 }
+@media screen and (max-width: 900px) {
+  .projects-content {
+    padding: 0;
+    margin: 5vh 0 0 0;
+
+    width: 100vw;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import Nav from "./components/nav/nav";
 import Home from "./pages/home/home";
@@ -41,10 +41,7 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--opacity", "0.13");
     document.documentElement.style.setProperty("--banner1", "#DDE2D6");
     document.documentElement.style.setProperty("--banner2", "#007BE5");
-              document.documentElement.style.setProperty(
-                "--pointer-events",
-                "auto"
-              );
+    document.documentElement.style.setProperty("--pointer-events", "auto");
   }
 }
 
@@ -55,72 +52,69 @@ function App() {
   });
   const [audioObject, setAudioObject] = useState(null);
   const [audioContext, setAudioContext] = useState(null);
-    const nodeRef = useRef(null);
+  const nodeRef = useRef(null);
 
-    useEffect(() => {
-      if (
-        location.pathname === "/" &&
-        sessionStorage.getItem("splashShown") !== "true"
-      ) {
-        setShowSplash(true);
-      } else {
-        setShowSplash(false);
-      }
-    }, [location]);
-
-    const handleHideSplash = () => {
+  useEffect(() => {
+    if (
+      location.pathname === "/" &&
+      sessionStorage.getItem("splashShown") !== "true"
+    ) {
+      setShowSplash(true);
+    } else {
       setShowSplash(false);
-      sessionStorage.setItem("splashShown", "true");
+    }
+  }, [location]);
+
+  const handleHideSplash = () => {
+    setShowSplash(false);
+    sessionStorage.setItem("splashShown", "true");
+  };
+
+  useEffect(() => {
+    updateCSSVariables();
+    window.addEventListener("popstate", updateCSSVariables);
+    return () => {
+      window.removeEventListener("popstate", updateCSSVariables);
     };
+  }, [showSplash]);
 
-    useEffect(() => {
-      updateCSSVariables();
-      window.addEventListener("popstate", updateCSSVariables);
-      return () => {
-        window.removeEventListener("popstate", updateCSSVariables);
-      };
-    }, [showSplash]);
+  return (
+    <div>
+      {showSplash ? (
+        <Splash onHide={handleHideSplash} />
+      ) : (
+        <div
+          id="main-container"
+          className={location.pathname === "/" ? "home-page" : ""}
+        >
+          <Nav />
+          <TransitionGroup>
+            {/* {audioObject && audioContext && ( */}
+            <Organ audioObject={audioObject} audioContext={audioContext} />
+            {/* )} */}
+            <CSSTransition
+              key={location.key}
+              timeout={1000}
+              classNames="fade"
+              nodeRef={nodeRef}
+            >
+              <div id="content-container" ref={nodeRef}>
+                <Routes location={location}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/info" element={<Info />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/projects/:slug" element={<ProjectSubPage />} />
+                </Routes>
 
-    return (
-      <div>
-        {showSplash ? (
-          <Splash onHide={handleHideSplash} />
-        ) : (
-          <div
-            id="main-container"
-            className={location.pathname === "/" ? "home-page" : ""}
-          >
-            <Nav />
-            <TransitionGroup>
-              {/* {audioObject && audioContext && ( */}
-              <Organ audioObject={audioObject} audioContext={audioContext} />
-              {/* )} */}
-              <CSSTransition
-                key={location.key}
-                timeout={1000}
-                classNames="fade"
-                nodeRef={nodeRef}
-              >
-                <div id="content-container" ref={nodeRef}>
-                  <Routes location={location}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/info" element={<Info />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route
-                      path="/projects/:slug"
-                      element={<ProjectSubPage />}
-                    />
-                  </Routes>
-
-                  <Footer />
-                  <ScrollText />
-                </div>
-              </CSSTransition>
-            </TransitionGroup>
-          </div>
-        )}
-      </div>
-    );
+                <Footer />
+                <ScrollText />
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function AppWrapper() {

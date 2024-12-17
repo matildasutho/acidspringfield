@@ -34,6 +34,7 @@ function ProjectSubPage() {
   const { slug } = useParams();
   const fruitWrapRef = useRef(null);
   const rightColumnRef = useRef(null);
+  const [isFruitWrapVisible, setIsFruitWrapVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,29 @@ function ProjectSubPage() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsFruitWrapVisible(true);
+          } else {
+            setIsFruitWrapVisible(false);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (fruitWrapRef.current) {
+      observer.unobserve(fruitWrapRef.current);
+    }
+    return () => {
+      if (fruitWrapRef.current) {
+        observer.unobserve(fruitWrapRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -123,58 +147,67 @@ function ProjectSubPage() {
       )}
     </>
   );
+  const contentColor = {
+    backgroundColor: isFruitWrapVisible
+      ? project.backgroundColour
+      : "var(--background)",
+  };
 
   return (
-    <div className="flex-row">
-      <div className="flex-col">
-        <div className="content">
-          <div className="hero-image">
-            <LazyLoadMedia
-              src={project.heroImage.url}
-              type="image"
-              alt={project.heroImage.title}
-              className="hero-image"
-              style={{
-                objectPosition:
-                  project.heroImagePosition === true
-                    ? "top"
-                    : project.heroImagePosition === false
-                    ? "bottom"
-                    : "center",
-              }}
-            />
-          </div>
-          <span className="tiny-txt">
-            <span>PROJECT</span>{" "}
-            <span className="caption-font">{project.projectTitle}</span>
-          </span>
-          <div className="project-wrap">
-            <span className="project-summary">
-              <h2 dangerouslySetInnerHTML={{ __html: emphasizedSummary }} />
+    <>
+      <div className="flex-row">
+        <div className="project-col">
+          <div className="content" style={contentColor}>
+            <div className="hero-image">
+              <LazyLoadMedia
+                src={project.heroImage.url}
+                type="image"
+                alt={project.heroImage.title}
+                className="hero-image"
+                style={{
+                  objectPosition:
+                    project.heroImagePosition === true
+                      ? "top"
+                      : project.heroImagePosition === false
+                      ? "bottom"
+                      : "center",
+                }}
+              />
+            </div>
+            <span className="tiny-txt">
+              <span>PROJECT</span>{" "}
+              <span className="caption-font">{project.projectTitle}</span>
             </span>
+            <div className="project-wrap" style={contentColor}>
+              <span className="project-summary">
+                <h2 dangerouslySetInnerHTML={{ __html: emphasizedSummary }} />
+              </span>
 
-            <h3
-              className="p1"
-              dangerouslySetInnerHTML={{ __html: paragraph1HTML }}
-            />
+              <h3
+                className="p1"
+                dangerouslySetInnerHTML={{ __html: paragraph1HTML }}
+              />
+            </div>
           </div>
-        </div>
 
-        <div
-          className="fruit-wrap content"
-          ref={fruitWrapRef}
-          style={{
-            height: "100%",
-            backgroundColor: project.backgroundColour || "#EFF3E8", // Set background color
-          }}
-        >
-          {project.mediaBlockCollection && (
-            <MediaBlockCollection items={project.mediaBlockCollection.items} />
-          )}
+          <div
+            className="fruit-wrap"
+            ref={fruitWrapRef}
+            style={{
+              height: "100%",
+              backgroundColor: project.backgroundColour || "#EFF3E8", // Set background color
+            }}
+          >
+            {project.mediaBlockCollection && (
+              <MediaBlockCollection
+                items={project.mediaBlockCollection.items}
+              />
+            )}
+          </div>
         </div>
       </div>
-      <RightColumn text={rightColumnContent}></RightColumn>
-    </div>
+      <RightColumn text={rightColumnContent} bgColor={"#d0f85f"}></RightColumn>
+    </>
   );
 }
 

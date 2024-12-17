@@ -1,0 +1,40 @@
+.project-subpage-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.media-block {
+  width: 100%;
+}
+
+.video-full,
+.image-block-single,
+.image-block-double,
+.media-gallery {
+  width: 100%;
+}
+
+.video-text,
+.text-block {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gallery-item {
+  flex: 1 1 calc(50% - 0.5rem);
+}
+
+.image,
+.gallery-media {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

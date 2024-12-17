@@ -37,9 +37,17 @@
   transition: opacity 150ms linear;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
+  #main-container {
+    flex-direction: column;
+  }
+
   .content {
-    padding-left: var(--global-padding);
-    padding-right: var(--global-padding);
+    padding: 5vh var(--global-padding);
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 100vh;
+    width: 100vw;
+    overflow: visible;
   }
 }

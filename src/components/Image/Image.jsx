@@ -7,11 +7,9 @@ const Image = ({ setImage, imageTitle, zoomedImage, mobileImage }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [imageSrc, setImageSrc] = useState(setImage);
 
-
   const toggleZoom = () => {
     setIsZoomed(!isZoomed);
   };
-
 
   useEffect(() => {
     const handleResize = () => {

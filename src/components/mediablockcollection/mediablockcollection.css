@@ -134,3 +134,14 @@
   width: auto;
   min-width: 100%;
 }
+
+@media screen and (max-width: 900px) {
+  .media-block-collection {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+  }
+  .video-text {
+    width: 100%;
+  }
+}
