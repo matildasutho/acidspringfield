@@ -118,23 +118,25 @@ const Nav = () => {
             </a>
             <div onClick={toggleLinks} className={"nav-item"}>
               <a>Listen</a>
-              {hoveredLink && links.length > 0 && (
-                <div className="hover-content-mobile">
-                  <ul>
-                    {links.map(
-                      (link, index) =>
-                        link.linksList &&
-                        link.linksList.json && (
-                          <li className="smll-txt" key={index}>
-                            <RichTextRenderer document={link.linksList.json} />
-                          </li>
-                        )
-                    )}
-                  </ul>
-                </div>
-              )}
             </div>
           </div>
+          {hoveredLink && links.length > 0 && (
+            <div className="mobile-wrap">
+              <div className="hover-content-mobile">
+                <ul>
+                  {links.map(
+                    (link, index) =>
+                      link.linksList &&
+                      link.linksList.json && (
+                        <li className="smll-txt" key={index}>
+                          <RichTextRenderer document={link.linksList.json} />
+                        </li>
+                      )
+                  )}
+                </ul>
+              </div>
+            </div>
+          )}
         </>
       )}
     </>

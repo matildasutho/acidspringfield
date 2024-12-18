@@ -63,6 +63,7 @@
 
 @media only screen and (max-width: 768px) {
   .full-page {
+    justify-content: flex-start;
     align-items: flex-start;
   }
   .enter-btn {

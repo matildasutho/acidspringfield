@@ -77,12 +77,20 @@
 .hidden {
   display: none;
 }
+.mobile-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 200px;
+  /* background-color: red; */
+}
 .hover-content-mobile {
-  position: relative;
+  position: absolute;
   width: fit-content;
   padding: var(--global-padding);
-  top: 90px;
-  left: var(--global-padding);
+  top: 60px;
+  left: 70vw;
   z-index: 3000;
   background-color: var(--banner1);
 }
