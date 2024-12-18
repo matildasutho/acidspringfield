@@ -85,7 +85,8 @@
 }
 .image-container img:hover {
   cursor: pointer;
-  mix-blend-mode: multiply;
+  transition: 0.3s ease-in-out;
+  opacity: 0.5;
   filter: contrast(100%) brightness(170%);
 }
 .image {
@@ -103,6 +104,7 @@
 }
 .image-block-double img:hover {
   cursor: pointer;
+  transition-duration: 0.3s;
   mix-blend-mode: multiply;
   filter: contrast(100%) brightness(170%);
 }
