@@ -119,7 +119,6 @@ const Nav = () => {
             <div
               onClick={toggleLinks}
               onTouchStart={toggleLinks}
-              onTouchEnd={toggleLinks}
               className={"nav-item"}
             >
               <a>Listen</a>
