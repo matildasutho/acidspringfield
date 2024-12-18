@@ -68,7 +68,7 @@
     align-content: flex-start;
     z-index: 200;
     /* box-shadow: -2px 0 15px rgba(0, 0, 0, 0.3); */
-    transform: translateY(calc(100svh - 4rem));
+    transform: translateY(calc(100vh - 4rem));
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
   }
