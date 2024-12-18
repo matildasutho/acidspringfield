@@ -105,7 +105,7 @@
 .image-block-double img:hover {
   cursor: pointer;
   transition-duration: 0.3s;
-  mix-blend-mode: multiply;
+  opacity: 0.5;
   filter: contrast(100%) brightness(170%);
 }
 .text-container {
