@@ -116,7 +116,12 @@ const Nav = () => {
             >
               Projects
             </a>
-            <div onClick={toggleLinks} className={"nav-item"}>
+            <div
+              onClick={toggleLinks}
+              onTouchStart={toggleLinks}
+              onTouchEnd={toggleLinks}
+              className={"nav-item"}
+            >
               <a>Listen</a>
             </div>
           </div>

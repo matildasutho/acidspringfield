@@ -27,9 +27,7 @@
 .nav-inner .nav-item {
   position: relative;
 }
-.nav-item:active {
-  color: var(--active);
-}
+
 .nav-inner a:hover + .hover-content,
 .nav-inner .hover-content:hover {
   display: block;
@@ -144,4 +142,14 @@
   .nav-inner-mobile {
     width: 90vw;
   }
+  .nav-inner ul li a:hover {
+    text-decoration: none;
+  }
+  .active-link:hover {
+    color: var(--active);
+  }
+}
+
+.nav-item:active {
+  color: var(--active);
 }
