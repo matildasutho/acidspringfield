@@ -172,6 +172,9 @@ const MediaBlockCollection = ({ items }) => {
                 key={item.sys.id}
                 className={`image-block-single ${item.layout}`}
                 style={item.imageWidth ? fullWidth : halfWidth}
+                onClick={() =>
+                  handleImageClick(item.image.url, item.image.title)
+                }
               >
                 <div className="image-container">
                   <LazyLoadMedia
@@ -179,9 +182,6 @@ const MediaBlockCollection = ({ items }) => {
                     type="image"
                     alt={item.image.title}
                     className="image"
-                    onClick={() =>
-                      handleImageClick(item.image.url, item.image.title)
-                    }
                   />
                 </div>
                 <p>{item.image.description}</p>
