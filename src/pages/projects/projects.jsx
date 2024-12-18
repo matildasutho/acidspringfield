@@ -15,6 +15,9 @@ const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [hoverImg, setHoverImg] = useState(null);
   const [imgPosition, setImgPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 768px)").matches
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,14 +39,24 @@ const Projects = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
   const handleButtonHover = (imagePath) => {
-    setHoverImg(imagePath);
+    if (!isMobile) {
+      setHoverImg(imagePath);
+    }
   };
 
   const handleImageMouseMove = (e) => {
-    setImgPosition({ x: e.clientX, y: e.clientY });
+    if (!isMobile) {
+      setImgPosition({ x: e.clientX, y: e.clientY });
+    }
   };
-
   return (
     <>
       <div className="flex-col projects-content fade-in">

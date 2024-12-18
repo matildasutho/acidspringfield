@@ -42,11 +42,11 @@
 
 @media screen and (max-width: 900px) {
   .marquee-container {
-    height: 5vh;
+    height: 2rem;
     /* box-shadow: -2px 0 15px rgba(0, 0, 0, 0.2); */
   }
   .marquee-content p a {
-    font-size: 5vh;
-    line-height: 5vh;
+    font-size: 2rem;
+    line-height: 2rem;
   }
 }

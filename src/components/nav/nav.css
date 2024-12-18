@@ -23,10 +23,12 @@
 .nav-inner .hover-content {
   display: none;
   position: absolute;
-  z-index: 100;
 }
 .nav-inner .nav-item {
   position: relative;
+}
+.nav-item:active {
+  color: var(--active);
 }
 .nav-inner a:hover + .hover-content,
 .nav-inner .hover-content:hover {
@@ -75,6 +77,20 @@
 .hidden {
   display: none;
 }
+.hover-content-mobile {
+  position: relative;
+  width: fit-content;
+  padding: var(--global-padding);
+  top: 90px;
+  left: var(--global-padding);
+  z-index: 3000;
+  background-color: var(--banner1);
+}
+.hover-content-mobile ul li a {
+  line-height: 1rem;
+  color: var(--active);
+  list-style-type: none;
+}
 
 @media screen and (max-width: 900px) {
   .sidebar-col {
@@ -85,7 +101,7 @@
   }
   .nav-inner-mobile {
     width: 80vw;
-    height: 5vh;
+    height: 68px;
     overflow: visible;
     border: none;
     padding: var(--global-padding);
@@ -101,13 +117,8 @@
     font-size: 1rem;
     line-height: 1rem;
   }
-  .hover-content-mobile {
-    position: absolute;
-    top: 5vh;
-    background-color: red;
-  }
 
-  .hover-content ul {
+  /* .hover-content-mobile ul {
     list-style-type: none;
     list-style-position: inside;
     padding: 4px 0;
@@ -115,8 +126,9 @@
   }
   .nav-inner ul li {
     padding-top: 0.5em;
-  }
+  } */
   .logo-mobile {
+    /* padding-top: var(--global-padding); */
     width: 100px;
   }
 }

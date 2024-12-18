@@ -1,45 +1,46 @@
 .threejs-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -50;
-    opacity: var(--opacity);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -50;
+  opacity: var(--opacity);
 }
 .audio-button {
-    background: none;
-    /* background-color: #201e1e00; */
-    border: none;
-    /* animation: float 9s ease-in-out infinite; */
-    display: flex;
-    flex-direction: row;
-    color: var(--overlay);
-    /* text-transform: capitalize; */
-    /* opacity: 0.8; */
+  background: none;
+  /* background-color: #201e1e00; */
+  border: none;
+  /* animation: float 9s ease-in-out infinite; */
+  display: flex;
+  flex-direction: row;
+  color: var(--overlay);
+  /* text-transform: capitalize; */
+  /* opacity: 0.8; */
 }
 .audio-button:hover {
-    cursor: pointer;
-    /* background-color: #201E1E; */
-    /* transition: background-color 0.1s ease-in-out; */
-    
+  cursor: pointer;
+  /* background-color: #201E1E; */
+  /* transition: background-color 0.1s ease-in-out; */
 }
 .audio-controls {
-    box-sizing: border-box;
-    position: absolute;
-    width: 80%;
-    height: 90%;
-    margin-left: calc(100vw / 12 * 2);
-    display: grid;
-    grid-template-columns: repeat(12, 1fr); /* Adjust the number of columns as needed */
-    grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */
-    gap: 10px; /* Adjust the gap between grid items as needed */
-
+  box-sizing: border-box;
+  position: absolute;
+  width: 80%;
+  height: 90%;
+  margin-left: calc(100vw / 12 * 2);
+  display: grid;
+  grid-template-columns: repeat(
+    12,
+    1fr
+  ); /* Adjust the number of columns as needed */
+  grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */
+  gap: 10px; /* Adjust the gap between grid items as needed */
 }
 .point-symbol {
-    width: 0.3rem;
-    height: 0.3rem;
-    margin: 0.3rem;
-    border-radius: 0.5rem;
-    background-color: var(--overlay);
+  width: 0.3rem;
+  height: 0.3rem;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+  background-color: var(--overlay);
 }
 @keyframes float {
   0% {
@@ -54,13 +55,22 @@
 }
 
 @keyframes active-audio {
-    0% {
-        opacity: 0.9;
-    }
-    50% {
-        opacity: 0.6;
-    }
-    100% {
-        opacity: 0.9;
-    }
+  0% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .audio-controls {
+    width: 75vw;
+    height: 85vh;
+    /* margin-top: 10vh; */
+    margin-left: 0;
+  }
 }

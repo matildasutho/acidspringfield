@@ -53,6 +53,17 @@ function App() {
   const [audioObject, setAudioObject] = useState(null);
   const [audioContext, setAudioContext] = useState(null);
   const nodeRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 900px)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
   useEffect(() => {
     if (
@@ -106,7 +117,7 @@ function App() {
                   <Route path="/projects/:slug" element={<ProjectSubPage />} />
                 </Routes>
 
-                <Footer />
+                {!isMobile && <Footer />}
                 <ScrollText />
               </div>
             </CSSTransition>

@@ -3,6 +3,7 @@ import RightColumn from "../../components/rightColumn/rightColumn";
 import { fetchInfo } from "../../API/contentful/fetchContentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import RichTextRenderer from "../../components/hyperlink/hyperlink";
+import Footer from "../../components/footer/footer.jsx";
 
 import "./info.css";
 
@@ -24,6 +25,9 @@ const Info = () => {
   const [info, setInfo] = useState([]);
   const [hoverImg, setHoverImg] = useState(null);
   const [imgPosition, setImgPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 900px)").matches
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,13 +42,24 @@ const Info = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
   const handleButtonHover = (imagePath) => {
-    setHoverImg(imagePath);
+    if (!isMobile) {
+      setHoverImg(imagePath);
+    }
   };
 
   const handleImageMouseMove = (e) => {
-    setImgPosition({ x: e.clientX, y: e.clientY });
+    if (!isMobile) {
+      setImgPosition({ x: e.clientX, y: e.clientY });
+    }
   };
 
   useEffect(() => {
@@ -154,6 +169,7 @@ const Info = () => {
             dangerouslySetInnerHTML={{ __html: paragraph1HTML }}
           ></p>
           <br />
+          {isMobile && <Footer />}
         </div>
       ))}
 

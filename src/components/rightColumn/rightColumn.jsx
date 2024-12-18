@@ -52,7 +52,7 @@ const RightColumn = ({ text, bgColor }) => {
               onClick={openOverlay}
               style={{ backgroundColor: bgColor }}
             >
-              <h3>Overview</h3>
+              OVERVIEW
               <div className="smll-txt">{text}</div>
             </div>
           </div>

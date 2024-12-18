@@ -29,7 +29,7 @@
 }
 @media screen and (max-width: 768px) {
   :root {
-    --global-padding: 0.5rem;
+    --global-padding: 0.75rem;
   }
 }
 body {
@@ -221,5 +221,8 @@ video {
 @media screen and (max-width: 400px) {
   .flex-row {
     flex-direction: column;
+  }
+  h5 {
+    line-height: 1.5rem;
   }
 }

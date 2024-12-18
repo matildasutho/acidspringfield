@@ -35,6 +35,7 @@ function ProjectSubPage() {
   const fruitWrapRef = useRef(null);
   const rightColumnRef = useRef(null);
   const [isFruitWrapVisible, setIsFruitWrapVisible] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,6 +154,19 @@ function ProjectSubPage() {
       : "var(--background)",
   };
 
+  const handleImageClick = (src, title, gallery = []) => {
+    setModalImage({ src, title });
+    setGalleryImages(gallery);
+    setCurrentImageIndex(gallery.findIndex((img) => img.url === src));
+    console.log("clicked");
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
+    setGalleryImages([]);
+    setCurrentImageIndex(0);
+  };
+
   return (
     <>
       <div className="flex-row">
@@ -172,6 +186,12 @@ function ProjectSubPage() {
                       ? "bottom"
                       : "center",
                 }}
+                onClick={() =>
+                  handleImageClick(
+                    project.heroImage.url,
+                    project.heroImage.title
+                  )
+                }
               />
             </div>
             <span className="tiny-txt">
@@ -206,6 +226,15 @@ function ProjectSubPage() {
           </div>
         </div>
       </div>
+      {modalImage && (
+        <Image
+          src={modalImage.src}
+          alt={modalImage.title}
+          gallery={galleryImages}
+          currentIndex={currentImageIndex}
+          closeModal={closeModal}
+        />
+      )}
       <RightColumn text={rightColumnContent} bgColor={"#d0f85f"}></RightColumn>
     </>
   );

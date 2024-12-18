@@ -16,6 +16,7 @@ const Nav = () => {
     window
       .matchMedia("(min-width: 900px)")
       .addEventListener("change", (e) => setMatches(e.matches));
+    setHoveredLink(false);
   }, []);
 
   useEffect(() => {
@@ -35,8 +36,10 @@ const Nav = () => {
   const toggleLinks = () => {
     if (hoveredLink === true) {
       setHoveredLink(false);
+      // console.log("closing");
     } else {
       setHoveredLink(true);
+      // console.log("opening");
     }
   };
   return (
@@ -70,7 +73,7 @@ const Nav = () => {
               >
                 <a>Listen</a>
                 {hoveredLink === "listen" && links.length > 0 && (
-                  <div className="hover-content-mobile">
+                  <div className="hover-content">
                     <ul>
                       {links.map(
                         (link, index) =>
@@ -115,7 +118,7 @@ const Nav = () => {
             </a>
             <div onClick={toggleLinks} className={"nav-item"}>
               <a>Listen</a>
-              {hoveredLink === "listen" && links.length > 0 && (
+              {hoveredLink && links.length > 0 && (
                 <div className="hover-content-mobile">
                   <ul>
                     {links.map(

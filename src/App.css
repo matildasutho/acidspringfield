@@ -43,7 +43,7 @@
   }
 
   .content {
-    padding: 5vh var(--global-padding);
+    padding: 68px var(--global-padding);
     box-sizing: border-box;
     height: 100%;
     min-height: 100vh;

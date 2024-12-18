@@ -38,6 +38,13 @@
 }
 
 @media screen and (max-width: 900px) {
+  .right-column-container {
+    width: 100vw;
+    height: 100svh;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
   .icon-container.expanded {
     padding-top: 1em;
     transition: display 0.3s ease-in-out;
@@ -61,17 +68,20 @@
     align-content: flex-start;
     z-index: 200;
     /* box-shadow: -2px 0 15px rgba(0, 0, 0, 0.3); */
-    transform: translateY(90vh);
+    transform: translateY(calc(100svh - 4rem));
     transition: transform 0.3s ease-in-out;
+    cursor: pointer;
   }
-
+  .col-inner .smll-txt {
+    padding-top: 2em;
+  }
   .col-inner .smll-txt p {
     color: var(--right-col-overlay);
-    padding: 0 30%;
+    padding-left: 5em;
   }
   .col-inner .smll-txt h5 {
     color: var(--right-col-overlay);
-    padding: 0 30%;
+    padding-left: 5em;
   }
   .col-inner .smll-txt a {
     color: var(--right-col-overlay);
@@ -79,6 +89,7 @@
   .col-inner.overlay-visible {
     display: block;
     transform: translateY(30vh);
+    cursor: auto;
   }
 
   .col-inner > * {
