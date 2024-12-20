@@ -33,27 +33,35 @@ const MediaBlockCollection = ({ items }) => {
     setCurrentImageIndex(0);
   };
 
+  const scrollGallery = (direction) => {
+    const galleryContainer = document.querySelector(".gallery-container");
+    const scrollAmount = direction === "left" ? -300 : 300;
+    galleryContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    console.log("scrolling", direction);
+  };
+
   return (
     <>
       <div className="media-block-collection">
         {items.map((item, index) => {
           if (item.__typename === "ComponentVideoTextBlock") {
             const textStyle = {
-              marginLeft:
-                item.textPosition === true
-                  ? "0"
-                  : item.textPosition === false
-                  ? "auto"
-                  : "6rem",
+              marginLeft: isMobile
+                ? "0"
+                : item.textPosition === true
+                ? "0"
+                : item.textPosition === false
+                ? "auto"
+                : "6rem",
             };
-
+            const reelStyle = {
+              width: isMobile ? "80%" : "calc(100vw / 12 * 4)",
+              marginLeft: isMobile ? "10%" : "6em",
+            };
             if (item.reelFormat) {
               return (
                 <div key={item.sys.id} className="media-block video-reel">
-                  <VideoPlayer
-                    src={item.video.url}
-                    style={{ width: "calc(100vw / 12 * 4)" }}
-                  />
+                  <VideoPlayer src={item.video.url} style={reelStyle} />
                   {item.videoText && (
                     <div className="video-text" style={textStyle}>
                       {documentToReactComponents(item.videoText.json)}
@@ -157,14 +165,13 @@ const MediaBlockCollection = ({ items }) => {
                   : "1/1",
               width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
 
-              marginLeft:
-                isMobile && item.imageAlignment === false
-                  ? "2rem"
-                  : item.imageAlignment === true
-                  ? "0"
-                  : item.imageAlignment === false
-                  ? "auto"
-                  : "6rem",
+              marginLeft: isMobile
+                ? "0"
+                : item.imageAlignment === true
+                ? "0"
+                : item.imageAlignment === false
+                ? "auto"
+                : "6rem",
             };
 
             return (
@@ -212,6 +219,13 @@ const MediaBlockCollection = ({ items }) => {
                             item.galleryContentCollection.items
                           )
                         }
+                        onTouchEvent={() =>
+                          handleImageClick(
+                            media.url,
+                            media.title,
+                            item.galleryContentCollection.items
+                          )
+                        }
                       >
                         <LazyLoadMedia
                           src={media.url}
@@ -222,6 +236,20 @@ const MediaBlockCollection = ({ items }) => {
                       </div>
                     )
                   )}
+                </div>
+                <div className="gallery-arrows">
+                  <button
+                    onClick={() => scrollGallery("left")}
+                    onTouchEvent={() => scrollGallery("left")}
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    onClick={() => scrollGallery("right")}
+                    onTouchEvent={() => scrollGallery("right")}
+                  >
+                    &gt;
+                  </button>
                 </div>
               </div>
             );

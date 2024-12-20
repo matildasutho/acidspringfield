@@ -35,12 +35,9 @@
 }
 .fruit-wrap {
   min-height: 100%;
-  padding: 2em calc(100vw / 12 * 2 + var(--global-padding));
+  padding: 2rem calc(100vw / 12 * 2 + var(--global-padding));
 }
 
-.fruit-wrap > * {
-  padding-bottom: 6rem;
-}
 .project-subpage {
   transition: background-color 0.3s ease;
 }

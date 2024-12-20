@@ -46,6 +46,7 @@ const Projects = () => {
     mediaQuery.addEventListener("change", handleMediaChange);
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
   }, []);
+  
   const handleButtonHover = (imagePath) => {
     if (!isMobile) {
       setHoverImg(imagePath);

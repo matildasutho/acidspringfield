@@ -65,6 +65,9 @@ const ProjectSubpageMobile = ({ items }) => {
                         type="image"
                         alt={media.title}
                         className="gallery-media"
+                        onClick={() =>
+                          handleImageClick(item.image.url, item.image.title)
+                        }
                       />
                     </div>
                   )
