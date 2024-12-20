@@ -219,7 +219,7 @@ const MediaBlockCollection = ({ items }) => {
                             item.galleryContentCollection.items
                           )
                         }
-                        onTouchEvent={() =>
+                        onTouchStart={() =>
                           handleImageClick(
                             media.url,
                             media.title,
@@ -240,13 +240,13 @@ const MediaBlockCollection = ({ items }) => {
                 <div className="gallery-arrows">
                   <button
                     onClick={() => scrollGallery("left")}
-                    onTouchEvent={() => scrollGallery("left")}
+                    onTouchStart={() => scrollGallery("left")}
                   >
                     &lt;
                   </button>
                   <button
                     onClick={() => scrollGallery("right")}
-                    onTouchEvent={() => scrollGallery("right")}
+                    onTouchStart={() => scrollGallery("right")}
                   >
                     &gt;
                   </button>
