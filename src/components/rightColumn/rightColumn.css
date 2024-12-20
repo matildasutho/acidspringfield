@@ -44,12 +44,14 @@
     position: fixed;
     top: 0;
     left: 0;
+    pointer-events: none;
   }
   .icon-container.expanded {
     padding-top: 1em;
     transition: display 0.3s ease-in-out;
     display: block;
     font-weight: 200;
+    pointer-events: auto;
   }
 
   .icon-container.expanded::after {
