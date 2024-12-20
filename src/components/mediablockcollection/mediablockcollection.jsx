@@ -10,11 +10,11 @@ const MediaBlockCollection = ({ items }) => {
   const [galleryImages, setGalleryImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(
-    window.matchMedia("(max-width: 768px)").matches
+    window.matchMedia("(max-width: 900px)").matches
   );
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
     const handleMediaChange = (e) => setIsMobile(e.matches);
 
     mediaQuery.addEventListener("change", handleMediaChange);
@@ -105,29 +105,63 @@ const MediaBlockCollection = ({ items }) => {
               </div>
             );
           } else if (item.__typename === "ComponentImageBlockDouble") {
+            const containerStyle = {
+              display: "flex",
+
+              flexDirection: isMobile
+                ? "column"
+                : item.layout
+                ? "row"
+                : "column",
+              gap: "var(--global-padding)",
+            };
+            const imageBlock = {
+              width: isMobile
+                ? "100%"
+                : "calc(100vw / 12 * 4 - var(--global-padding) * 2)",
+              minHeight: isMobile ? "50vh" : "300px",
+              // aspectRatio: item.layout ? "4/6" : "6/4",
+              display: "flex",
+
+              flexDirection: item.layout ? "row" : "column",
+              gap: "var(--global-padding)",
+
+              marginLeft: isMobile
+                ? "0rem"
+                : item.imageAlignment === true
+                ? "0"
+                : item.imageAlignment === false
+                ? "calc(100vw / 12 * 4)"
+                : "6rem",
+              marginRight: item.imageAlignment === false ? "0" : "auto",
+            };
             const doubleImageStyle = {
+              // height: isMobile ? "60vh" : "300px",
               width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
               objectFit: "cover",
               aspectRatio: item.layout ? "4/6" : "6/4",
-              marginLeft:
-                isMobile && item.imageAlignment === false
-                  ? "0rem"
-                  : item.imageAlignment === true
-                  ? "0"
-                  : item.imageAlignment === false
-                  ? "auto"
-                  : "6rem",
             };
-            const containerStyle = {
-              boxSizing: "border-box",
-              display: "flex",
-              flexDirection: item.layout ? "row" : "column",
-              gap: "var(--global-padding)",
+
+            const textStyle = {
+              width: isMobile
+                ? "100%"
+                : "calc(100vw / 12 * 4 - var(--global-padding) * 3)",
+              marginLeft: isMobile
+                ? "0rem"
+                : item.imageAlignment === true
+                ? "0"
+                : item.imageAlignment === false
+                ? "auto"
+                : "6rem",
             };
 
             return (
-              <div key={item.sys.id} className="image-block-double">
-                <div style={containerStyle}>
+              <div
+                key={item.sys.id}
+                className="image-block-double"
+                style={containerStyle}
+              >
+                <div style={imageBlock}>
                   {item.imageBlockCollection.items.map((image, imgIndex) => (
                     <div
                       key={item.sys.id + imgIndex}
@@ -149,6 +183,11 @@ const MediaBlockCollection = ({ items }) => {
                     </div>
                   ))}
                 </div>
+                {item.textBlock && (
+                  <div className="text-container" style={textStyle}>
+                    {documentToReactComponents(item.textBlock.json)}
+                  </div>
+                )}
               </div>
             );
           } else if (item.__typename === "ComponentImageBlockSingle") {
@@ -173,17 +212,36 @@ const MediaBlockCollection = ({ items }) => {
                 ? "auto"
                 : "6rem",
             };
-
+            const containerStyle = {
+              boxSizing: "border-box",
+              display: "flex",
+              flexDirection: item.layout ? "row" : "column",
+              gap: "var(--global-padding)",
+            };
+            const textStyle = {
+              width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
+              marginLeft:
+                isMobile && item.imageAlignment === false
+                  ? "0rem"
+                  : item.imageAlignment === true
+                  ? "0"
+                  : item.imageAlignment === false
+                  ? "auto"
+                  : "6rem",
+            };
             return (
               <div
                 key={item.sys.id}
                 className={`image-block-single ${item.layout}`}
-                style={item.imageWidth ? fullWidth : halfWidth}
+                style={containerStyle}
                 onClick={() =>
                   handleImageClick(item.image.url, item.image.title)
                 }
               >
-                <div className="image-container">
+                <div
+                  className="image-container"
+                  style={item.imageWidth ? fullWidth : halfWidth}
+                >
                   <LazyLoadMedia
                     src={item.image.url}
                     type="image"
@@ -191,7 +249,11 @@ const MediaBlockCollection = ({ items }) => {
                     className="image"
                   />
                 </div>
-                <p>{item.image.description}</p>
+                {item.textBlock && (
+                  <div className="text-container" style={textStyle}>
+                    {documentToReactComponents(item.textBlock.json)}
+                  </div>
+                )}
               </div>
             );
           } else if (item.__typename === "ComponentProjectMediaGallery") {

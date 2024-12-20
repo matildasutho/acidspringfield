@@ -112,11 +112,15 @@
   text-align: left;
   width: auto;
 }
-
+.text-container p {
+  text-align: left;
+  width: 100%;
+}
 .double-image {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  /* flex: 0 0 50%; */
+  /* position: relative; */
 }
 
 .image-block-double .image {
