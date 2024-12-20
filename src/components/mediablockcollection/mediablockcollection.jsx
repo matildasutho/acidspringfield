@@ -151,7 +151,7 @@ const MediaBlockCollection = ({ items }) => {
                 : item.imageAlignment === true
                 ? "0"
                 : item.imageAlignment === false
-                ? "auto"
+                ? "calc(100vw / 12 * 4)"
                 : "6rem",
             };
 
