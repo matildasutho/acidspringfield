@@ -80,6 +80,7 @@ const projectQuery = `
                   height
                 }
               }
+              layout
               imageAlignment
               textBlock {
               json
