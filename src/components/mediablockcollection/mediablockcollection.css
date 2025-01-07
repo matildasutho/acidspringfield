@@ -100,7 +100,7 @@
 .image-block-double {
   display: flex;
   gap: var(--global-padding);
-  width: 100%;
+  /* width: 100%; */
 }
 .image-block-double img:hover {
   cursor: pointer;
