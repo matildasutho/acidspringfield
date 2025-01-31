@@ -201,4 +201,9 @@
     mix-blend-mode: none;
     filter: none;
   }
+  .video-controls button {
+    color: var(--overlay);
+    font-size: 2rem;
+    opacity: 0.9;
+  }
 }
