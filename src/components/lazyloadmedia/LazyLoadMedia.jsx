@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const LazyLoadMedia = ({ src, type, alt, className, style }) => {
+const LazyLoadMedia = ({ src, mobileSrc, type, alt, className, style }) => {
   const mediaRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(
@@ -44,6 +44,8 @@ const LazyLoadMedia = ({ src, type, alt, className, style }) => {
     };
   }, [isMobile]);
 
+  const videoSrc = isMobile && mobileSrc ? mobileSrc : src;
+
   if (type === "image") {
     return (
       <img
@@ -63,7 +65,7 @@ const LazyLoadMedia = ({ src, type, alt, className, style }) => {
         className={`${className} fade-in`}
         style={style}
       >
-        <source src={src} type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     ) : (
