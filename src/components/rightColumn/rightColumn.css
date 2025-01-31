@@ -1,6 +1,11 @@
 .right-column-container {
   position: relative;
 }
+.right-column-container ul::after {
+  content: "\ ";
+  display: block;
+  white-space: pre;
+}
 
 .icon-container {
   display: none;
