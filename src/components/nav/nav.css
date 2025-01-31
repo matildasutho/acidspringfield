@@ -24,6 +24,7 @@
   display: none;
   position: absolute;
 }
+
 .nav-inner .nav-item {
   position: relative;
 }
@@ -84,11 +85,11 @@
   /* background-color: red; */
 }
 .hover-content-mobile {
-  position: absolute;
-  width: fit-content;
+  position: fixed;
+  width: calc(30%);
   padding: var(--global-padding);
   top: 60px;
-  left: 70vw;
+  left: calc(70% - 1rem);
   z-index: 3000;
   background-color: var(--banner1);
 }
@@ -124,15 +125,6 @@
     line-height: 1rem;
   }
 
-  /* .hover-content-mobile ul {
-    list-style-type: none;
-    list-style-position: inside;
-    padding: 4px 0;
-    margin-left: -5px;
-  }
-  .nav-inner ul li {
-    padding-top: 0.5em;
-  } */
   .logo-mobile {
     /* padding-top: var(--global-padding); */
     width: 100px;

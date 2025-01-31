@@ -17,6 +17,7 @@ import "./App.css";
 function updateCSSVariables() {
   if (document.body.classList.contains("home-page")) {
     document.documentElement.style.setProperty("--overlay", "#9D989A");
+    document.documentElement.style.setProperty("--listen", "#201E1E");
     document.documentElement.style.setProperty("--background", "#FFF5E1E5");
     document.documentElement.style.setProperty("--active", "#9D989A");
     document.documentElement.style.setProperty("--hover", "#007be5");
@@ -26,6 +27,7 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--pointer-events", "none");
   } else if (document.body.classList.contains("info-page")) {
     document.documentElement.style.setProperty("--overlay", "#FFF5E1");
+    document.documentElement.style.setProperty("--listen", "#FFF5E1");
     document.documentElement.style.setProperty("--background", "#007be5");
     document.documentElement.style.setProperty("--active", "#201E1E");
     document.documentElement.style.setProperty("--hover", "#DDE2D6");
@@ -35,6 +37,7 @@ function updateCSSVariables() {
     document.documentElement.style.setProperty("--pointer-events", "auto");
   } else {
     document.documentElement.style.setProperty("--overlay", "#007be5");
+    document.documentElement.style.setProperty("--listen", "#007be5");
     document.documentElement.style.setProperty("--background", "#FFFFFF");
     document.documentElement.style.setProperty("--active", "#201E1E");
     document.documentElement.style.setProperty("--hover", "#007be55E");

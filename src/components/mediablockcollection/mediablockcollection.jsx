@@ -35,7 +35,7 @@ const MediaBlockCollection = ({ items }) => {
 
   const scrollGallery = (direction) => {
     const galleryContainer = document.querySelector(".gallery-container");
-    const scrollAmount = direction === "left" ? -300 : 300;
+    const scrollAmount = direction === "left" ? -400 : 400;
     galleryContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
     console.log("scrolling", direction);
   };
@@ -45,6 +45,17 @@ const MediaBlockCollection = ({ items }) => {
       <div className="media-block-collection">
         {items.map((item, index) => {
           if (item.__typename === "ComponentVideoTextBlock") {
+            const containerStyle = {
+              width: isMobile
+                ? "100%"
+                : "calc((100vw / 12 * 8) - var(--global-padding) * 2)",
+              display: "flex",
+              flexDirection: isMobile
+                ? "column"
+                : item.textPosition
+                ? "row"
+                : "row-reverse",
+            };
             const textStyle = {
               marginLeft: isMobile
                 ? "0"
@@ -55,12 +66,22 @@ const MediaBlockCollection = ({ items }) => {
                 : "6rem",
             };
             const reelStyle = {
-              width: isMobile ? "80%" : "calc(100vw / 12 * 4)",
-              marginLeft: isMobile ? "10%" : "6em",
+              width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
+              marginLeft: isMobile
+                ? "0%"
+                : item.textPosition === true
+                ? "0"
+                : item.textPosition === false
+                ? "auto"
+                : "6em",
             };
             if (item.reelFormat) {
               return (
-                <div key={item.sys.id} className="media-block video-reel">
+                <div
+                  key={item.sys.id}
+                  className="media-block video-reel"
+                  style={containerStyle}
+                >
                   <VideoPlayer src={item.video.url} style={reelStyle} />
                   {item.videoText && (
                     <div className="video-text" style={textStyle}>
@@ -107,51 +128,64 @@ const MediaBlockCollection = ({ items }) => {
           } else if (item.__typename === "ComponentImageBlockDouble") {
             const containerStyle = {
               display: "flex",
-
-              flexDirection: isMobile
-                ? "column"
-                : item.layout
-                ? "row"
-                : "column",
+              flexDirection: "column", // Always use column layout
               gap: "var(--global-padding)",
+              width: "100%", // Ensure the container takes up the full width
             };
+
             const imageBlock = {
-              width: isMobile
-                ? "100%"
-                : "calc(100vw / 12 * 4 - var(--global-padding) * 2)",
+              width: "100%", // Ensure the image block takes up the full width
               minHeight: isMobile ? "50vh" : "300px",
-              // aspectRatio: item.layout ? "4/6" : "6/4",
               display: "flex",
-
-              flexDirection: item.layout ? "row" : "column",
-              gap: "var(--global-padding)",
-
+              flexDirection: item.layout ? "row" : "column", // Always use column layout
+              gap: "0.5rem",
               marginLeft: isMobile
                 ? "0rem"
                 : item.imageAlignment === true
                 ? "0"
                 : item.imageAlignment === false
-                ? "calc(100vw / 12 * 4)"
+                ? "calc(100vw / 12 * 4 - (var(--global-padding) * 2))"
                 : "6rem",
               marginRight: item.imageAlignment === false ? "0" : "auto",
             };
+
+            const imageBlockMobile = {
+              width: "100%", // Ensure the image block takes up the full width
+              display: "flex",
+              flexDirection: "column", // Always use column layout
+              gap: "0.5rem",
+            };
+
+            const doubleImageMobile = {
+              width: "100%",
+              height: "auto",
+              aspectRatio: "3/2",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            };
+
             const doubleImageStyle = {
-              // height: isMobile ? "60vh" : "300px",
-              width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
-              objectFit: "cover",
-              aspectRatio: item.layout ? "4/6" : "6/4",
+              width: isMobile
+                ? "100%"
+                : item.layout
+                ? "calc(100vw / 12 * 2 - 0.25rem)"
+                : "calc(100vw / 12 * 4)", // Ensure the images take up the full width of the image block
+              height: item.layout ? "calc(100vw / 12 * 3)" : "auto",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              aspectRatio: "3/2",
             };
 
             const textStyle = {
-              width: isMobile
-                ? "100%"
-                : "calc(100vw / 12 * 4 - var(--global-padding) * 3)",
+              width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
               marginLeft: isMobile
                 ? "0rem"
                 : item.imageAlignment === true
                 ? "0"
                 : item.imageAlignment === false
-                ? "calc(100vw / 12 * 4)"
+                ? "calc(100vw / 12 * 4 - var(--global-padding) * 2 - 0.5rem)"
                 : "6rem",
             };
 
@@ -161,7 +195,7 @@ const MediaBlockCollection = ({ items }) => {
                 className="image-block-double"
                 style={containerStyle}
               >
-                <div style={imageBlock}>
+                <div style={isMobile ? imageBlockMobile : imageBlock}>
                   {item.imageBlockCollection.items.map((image, imgIndex) => (
                     <div
                       key={item.sys.id + imgIndex}
@@ -173,13 +207,12 @@ const MediaBlockCollection = ({ items }) => {
                           item.imageBlockCollection.items
                         )
                       }
+                      style={{
+                        ...(isMobile ? doubleImageMobile : doubleImageStyle),
+                        backgroundImage: `url(${image.url})`,
+                      }}
                     >
-                      <LazyLoadMedia
-                        src={image.url}
-                        type="image"
-                        alt={image.title}
-                        style={doubleImageStyle}
-                      />
+                      {/* Remove the img tag */}
                     </div>
                   ))}
                 </div>
@@ -215,11 +248,17 @@ const MediaBlockCollection = ({ items }) => {
             const containerStyle = {
               boxSizing: "border-box",
               display: "flex",
-              flexDirection: item.layout ? "row" : "column",
+              flexDirection: isMobile
+                ? "column"
+                : item.imageWidth
+                ? "column"
+                : "row",
               gap: "var(--global-padding)",
             };
             const textStyle = {
-              width: isMobile ? "100%" : "calc(100vw / 12 * 4)",
+              width: isMobile
+                ? "100%"
+                : "calc(100vw / 12 * 4 - var(--global-padding) * 3)",
               marginLeft:
                 isMobile && item.imageAlignment === false
                   ? "0rem"

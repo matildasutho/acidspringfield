@@ -3,8 +3,24 @@ import React, { useRef, useEffect, useState } from "react";
 const LazyLoadMedia = ({ src, type, alt, className, style }) => {
   const mediaRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 768px)").matches
+  );
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsLoaded(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -26,7 +42,7 @@ const LazyLoadMedia = ({ src, type, alt, className, style }) => {
         observer.unobserve(mediaRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
 
   if (type === "image") {
     return (

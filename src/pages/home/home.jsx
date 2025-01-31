@@ -44,7 +44,7 @@ const Home = ({ onAudioReady }) => {
     setFadeOut(true);
     setTimeout(() => {
       setShowTrigger(false);
-    }, 1000); // Adjust the timeout duration to match the fade-out animation duration
+    }, 500); // Adjust the timeout duration to match the fade-out animation duration
   };
 
   return (
@@ -56,8 +56,8 @@ const Home = ({ onAudioReady }) => {
           onClick={handleTriggerClick}
         >
           <h3>
-            Click to build your own mix of Acid Springfield samples and field
-            recordings.
+            Click files to build your own mix of Acid Springfield samples and
+            field recordings.
           </h3>
         </div>
       )}

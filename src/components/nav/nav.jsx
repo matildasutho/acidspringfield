@@ -79,7 +79,7 @@ const Nav = () => {
                         (link, index) =>
                           link.linksList &&
                           link.linksList.json && (
-                            <li className="smll-txt" key={index}>
+                            <li className="link-txt" key={index}>
                               <RichTextRenderer
                                 document={link.linksList.json}
                               />
@@ -132,7 +132,7 @@ const Nav = () => {
                     (link, index) =>
                       link.linksList &&
                       link.linksList.json && (
-                        <li className="smll-txt" key={index}>
+                        <li className="link-txt" key={index}>
                           <RichTextRenderer document={link.linksList.json} />
                         </li>
                       )

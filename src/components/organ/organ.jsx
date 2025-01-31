@@ -40,16 +40,16 @@ const generateRandomKeyframes = () => {
 };
 
 const Goobath = [
-  "/samples/Goobath/compost_horn.mp3",
-  "/samples/Goobath/cork_pop.mp3",
-  "/samples/Goobath/deep_bass.mp3",
-  "/samples/Goobath/demon_spring.mp3",
-  "/samples/Goobath/openoneeye.mp3",
-  "/samples/Goobath/peace_pad.mp3",
-  "/samples/Goobath/pluck.mp3",
-  "/samples/Goobath/reverse_metalscrape.mp3",
-  "/samples/Goobath/swamp_soda.mp3",
-  "/samples/Goobath/waterlogged_dub.mp3",
+  "/samples/compost_horn.mp3",
+  "/samples/cork_pop.mp3",
+  "/samples/deep_bass.mp3",
+  "/samples/demon_spring.mp3",
+  "/samples/openoneeye.mp3",
+  "/samples/peace_pad.mp3",
+  "/samples/pluck.mp3",
+  "/samples/reverse_metalscrape.mp3",
+  "/samples/swamp_soda.mp3",
+  "/samples/waterlogged_dub.mp3",
 ];
 
 function Organ() {
@@ -147,11 +147,9 @@ function Organ() {
         sound.onEnded = () => {
           console.log("onEnded");
           sound.isPlaying = false;
-          document.getElementsByClassName("audio-button")[
-            index
-          ].style.animation = "";
-          document.getElementsByClassName("audio-button")[index].style.color =
-            "var(--overlay)";
+          const button = document.getElementsByClassName("audio-button")[index];
+          button.style.animation = "";
+          button.style.color = "var(--banner2)";
         };
         return sound;
       });
@@ -288,15 +286,14 @@ function Organ() {
 
     if (sound.isPlaying) {
       sound.pause();
-      // Restore the original animation when paused
-      const originalAnimation = button.dataset.originalAnimation;
-      button.style.animation = originalAnimation;
+      button.style.animation = "";
+      button.style.color = "var(--overlay)";
+      button.style.backgroundColor = "#ffffff00";
     } else {
       sound.play();
-      // Store the original animation in a data attribute
-      button.dataset.originalAnimation = button.style.animation;
-      const existingAnimation = button.style.animation;
-      button.style.animation = `${existingAnimation}, active-audio 3s ease-in-out infinite`;
+      button.style.animation = "active-audio 3s ease-in-out infinite";
+      button.style.color = "var(--banner2)";
+      button.style.backgroundColor = "var(--banner1)";
     }
   };
 
@@ -306,11 +303,12 @@ function Organ() {
       console.log("onEnded");
       sound.isPlaying = false;
       const button = document.getElementsByClassName("audio-button")[index];
-      const originalAnimation = button.dataset.originalAnimation;
-      button.style.animation = originalAnimation;
+      button.style.animation = "";
       button.style.color = "var(--overlay)";
+      button.style.backgroundColor = "#ffffff00";
     };
   });
+
   const getFileName = (filePath) => {
     return filePath.split("/").pop().split(".")[0];
   };

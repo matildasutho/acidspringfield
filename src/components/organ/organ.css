@@ -7,19 +7,18 @@
 }
 .audio-button {
   background: none;
-  /* background-color: #201e1e00; */
+  color: var(--overlay);
+  transition: color 0.3s ease;
   border: none;
-  /* animation: float 9s ease-in-out infinite; */
   display: flex;
   flex-direction: row;
-  color: var(--overlay);
-  /* text-transform: capitalize; */
-  /* opacity: 0.8; */
+}
+.active-audio {
+  animation: active-audio 3s ease-in-out infinite;
 }
 .audio-button:hover {
+  color: var(--overlay);
   cursor: pointer;
-  /* background-color: #201E1E; */
-  /* transition: background-color 0.1s ease-in-out; */
 }
 .audio-controls {
   box-sizing: border-box;
@@ -28,12 +27,9 @@
   height: 90%;
   margin-left: calc(100vw / 12 * 2);
   display: grid;
-  grid-template-columns: repeat(
-    12,
-    1fr
-  ); /* Adjust the number of columns as needed */
-  grid-template-rows: repeat(12, 1fr); /* Adjust the number of rows as needed */
-  gap: 10px; /* Adjust the gap between grid items as needed */
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  gap: 10px;
 }
 .point-symbol {
   width: 0.3rem;
@@ -56,13 +52,25 @@
 
 @keyframes active-audio {
   0% {
-    opacity: 0.9;
+    opacity: 1;
   }
   50% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
   100% {
-    opacity: 0.9;
+    opacity: 1;
+  }
+}
+
+@keyframes stop-audio {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
