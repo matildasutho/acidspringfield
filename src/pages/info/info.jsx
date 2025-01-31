@@ -169,6 +169,13 @@ const Info = () => {
             dangerouslySetInnerHTML={{ __html: paragraph1HTML }}
           ></p>
           <br />
+          <h5>
+            Website designed and built by{" "}
+            <a href="https://girlonroad.tech/" target="_blank">
+              <u>Girl On Road</u>
+            </a>
+            , with Michael Stone.
+          </h5>
           {isMobile && <Footer />}
         </div>
       ))}

@@ -58,6 +58,10 @@
 .fade-in-img {
   animation: fade-in-img 0.12s;
 }
+.content h5 {
+  line-height: 1rem;
+  padding-bottom: 0.75rem;
+}
 @keyframes fade-in-img {
   0% {
     opacity: 0;
