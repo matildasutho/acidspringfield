@@ -49,6 +49,9 @@ body {
   color: var(--overlay);
   background-color: var(--background);
 }
+video {
+  background-color: "black";
+}
 h1 {
   font-size: 1.8rem;
   line-height: 2.2rem;
