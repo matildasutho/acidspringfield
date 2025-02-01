@@ -40,16 +40,16 @@ const generateRandomKeyframes = () => {
 };
 
 const Goobath = [
-  "/samples/compost_horn.mp3",
-  "/samples/cork_pop.mp3",
-  "/samples/deep_bass.mp3",
-  "/samples/demon_spring.mp3",
-  "/samples/openoneeye.mp3",
-  "/samples/peace_pad.mp3",
-  "/samples/pluck.mp3",
-  "/samples/reverse_metalscrape.mp3",
-  "/samples/swamp_soda.mp3",
-  "/samples/waterlogged_dub.mp3",
+  "/samples/Goobath/compost_horn.mp3",
+  "/samples/Goobath/cork_pop.mp3",
+  "/samples/Goobath/deep_bass.mp3",
+  "/samples/Goobath/demon_spring.mp3",
+  "/samples/Goobath/openoneeye.mp3",
+  "/samples/Goobath/peace_pad.mp3",
+  "/samples/Goobath/pluck.mp3",
+  "/samples/Goobath/reverse_metalscrape.mp3",
+  "/samples/Goobath/swamp_soda.mp3",
+  "/samples/Goobath/waterlogged_dub.mp3",
 ];
 
 function Organ() {
