@@ -174,7 +174,11 @@ const Info = () => {
             <a href="https://girlonroad.tech/" target="_blank">
               <u>Girl On Road</u>
             </a>
-            , with Michael Stone.
+            , with{" "}
+            <a href="https://michaelthestone.com/" target="_blank">
+              <u>Michael Stone</u>
+            </a>
+            .
           </h5>
           {isMobile && <Footer />}
         </div>

@@ -64,7 +64,9 @@
   top: calc(50% - 75px);
   opacity: 0.05;
 }
-
+.video {
+  background-color: "black";
+}
 .video-controls button:hover {
   color: var(--overlay);
   opacity: 1;

@@ -16,11 +16,6 @@ const LazyLoadMedia = ({ src, mobileSrc, type, alt, className, style }) => {
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
-      setIsLoaded(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -44,13 +39,13 @@ const LazyLoadMedia = ({ src, mobileSrc, type, alt, className, style }) => {
     };
   }, [isMobile]);
 
-  const videoSrc = isMobile && mobileSrc ? mobileSrc : src;
+  const mediaSrc = isMobile && mobileSrc ? mobileSrc : src;
 
   if (type === "image") {
     return (
       <img
         ref={mediaRef}
-        src={isLoaded ? src : ""}
+        src={isLoaded ? mediaSrc : ""}
         alt={alt}
         className={`${className} ${isLoaded ? "fade-in" : ""}`}
         loading="lazy"
@@ -65,7 +60,7 @@ const LazyLoadMedia = ({ src, mobileSrc, type, alt, className, style }) => {
         className={`${className} fade-in`}
         style={style}
       >
-        <source src={videoSrc} type="video/mp4" />
+        <source src={mediaSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     ) : (

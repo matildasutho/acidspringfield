@@ -75,6 +75,7 @@ const MediaBlockCollection = ({ items }) => {
                 ? "auto"
                 : "6em",
             };
+
             if (item.reelFormat) {
               return (
                 <div
@@ -82,7 +83,12 @@ const MediaBlockCollection = ({ items }) => {
                   className="media-block video-reel"
                   style={containerStyle}
                 >
-                  <VideoPlayer src={item.video.url} style={reelStyle} />
+                  <VideoPlayer
+                    src={item.video.url}
+                    mobileSrc={item.mobileVideo?.url || item.video.url}
+                    style={reelStyle}
+                  />
+
                   {item.videoText && (
                     <div className="video-text" style={textStyle}>
                       {documentToReactComponents(item.videoText.json)}
@@ -92,9 +98,12 @@ const MediaBlockCollection = ({ items }) => {
               );
             } else {
               return (
-                <div>
-                  <div key={item.sys.id} className="media-block">
-                    <VideoPlayer src={item.video.url} />
+                <div key={item.sys.id}>
+                  <div className="media-block">
+                    <VideoPlayer
+                      src={item.video.url}
+                      mobileSrc={item.mobileVideo?.url || item.video.url}
+                    />
                   </div>
                   {item.videoText && (
                     <div className="video-text" style={textStyle}>
@@ -376,9 +385,20 @@ const MediaBlockCollection = ({ items }) => {
   );
 };
 
-const VideoPlayer = ({ src, style }) => {
+const VideoPlayer = ({ src, mobileSrc, style }) => {
   const videoRef = React.useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 768px)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -403,9 +423,11 @@ const VideoPlayer = ({ src, style }) => {
     }
   };
 
+  const videoSrc = isMobile && mobileSrc ? mobileSrc : src;
+
   return (
     <div className="video-player" style={style}>
-      <video className="video" src={src} ref={videoRef} />
+      <video className="video" src={videoSrc} ref={videoRef} />
       <div className="video-controls">
         <button onClick={handlePlayPause}>
           {isPlaying ? "PAUSE" : "PLAY"}

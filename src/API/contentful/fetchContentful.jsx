@@ -141,6 +141,16 @@ const projectQuery = `
                 width
                 height
               }
+              mobileVideo {
+                url
+                title
+                description
+                contentType
+                fileName
+                size
+                width
+                height
+              }
               videoText {
                 json
               }
