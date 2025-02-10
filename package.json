@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.22.10",
+    "@vercel/analytics": "^1.5.0",
     "create-vite": "^5.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -13,6 +13,7 @@ import Splash from "./components/splash/splash";
 import { AudioProvider } from "./components/audiocontext/AudioContext";
 import ScrollText from "./components/scrolltext/scrolltext";
 import "./App.css";
+import { Analytics } from "@vercel/analytics/react";
 
 function updateCSSVariables() {
   if (document.body.classList.contains("home-page")) {
@@ -125,6 +126,7 @@ function App() {
               </div>
             </CSSTransition>
           </TransitionGroup>
+          <Analytics />
         </div>
       )}
     </div>
